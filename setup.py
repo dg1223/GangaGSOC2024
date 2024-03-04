@@ -2,7 +2,7 @@ from distutils.core import setup
 setup(
     name='gangagsoc',
     packages=['gangagsoc'],
-    version='v2023',
+    version='v2024',
     license='gpl-3.0',
     description='The Challenge for GSoC 2024 student to particpate in the Ganga project',
     author='Ulrik Egede',
