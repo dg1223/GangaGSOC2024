@@ -7,7 +7,7 @@ from PyPDF2 import PdfReader, PdfWriter
 def get_current_directory():
     if len(sys.argv) != 2:
         print(f"You must specify the current directory path as an argument")
-        return
+        sys.exit(1)
 
     current_dir = sys.argv[1]
 
