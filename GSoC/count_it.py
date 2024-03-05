@@ -46,4 +46,4 @@ def count_word(file, word):
 
 if __name__ == '__main__':
     current_dir = get_current_directory()
-    print(count_word(current_dir + '/LHC.pdf', "it"))
+    print("word count for 'it' in LHC.pdf: ", count_word(current_dir + '/LHC.pdf', "it"))
