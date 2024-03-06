@@ -30,21 +30,17 @@ def preprocess_text(text):
     clean_text = re.sub(non_alpha_numeric, '', clean_text)
 
     return clean_text
+    
 
 def count_word(file, page_num, word):
-    # total_count = 0
     with open(file, 'rb') as pdf:
         reader = PdfReader(pdf)
-        # for page in reader.pages:
         text = reader.pages[int(page_num)].extract_text()
         clean_text = preprocess_text(text)
-        # total_count += Counter(clean_text.split())[word]
-        return Counter(clean_text.split())[word]
 
-    # return total_count
+        return Counter(clean_text.split())[word]
 
 
 if __name__ == '__main__':
     current_dir, page_num, word = get_arguments()
-    print(f"word count for '{word}' in page {page_num} of LHC.pdf: \
-        {count_word(current_dir + '/LHC.pdf', page_num, word)}")
+    print(count_word(current_dir + '/LHC.pdf', page_num, word))
