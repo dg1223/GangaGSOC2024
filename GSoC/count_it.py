@@ -44,23 +44,4 @@ def count_word(file, page_num, word):
 
 if __name__ == '__main__':
     current_dir, page_num, word = get_arguments()
-    count = (count_word(current_dir + '/LHC.pdf', page_num, word))
-
-    # store counts from each page to a file
-    output_file = os.path.join(current_dir, 'count_it.txt')
-    
-    if not os.path.exists(output_file):
-        with open(output_file, 'w') as f:
-            f.write(str(count))
-    else:
-        # get the current word count
-        with open(output_file, 'r') as f:
-            line = f.readline()
-            try:
-                previous_count = int(line.strip())
-            except ValueError:
-                print("The file does not contain a valid number.")
-
-        # update word count
-        with open(output_file, 'w') as f:
-            f.write(str(previous_count + count))
+    print((count_word(current_dir + '/LHC.pdf', page_num, word)))
