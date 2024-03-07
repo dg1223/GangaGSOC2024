@@ -38,18 +38,23 @@ if job_name == 'count_it':
     reader = PdfReader('LHC.pdf')
     number_of_pages = len(reader.pages)
     word = 'it'
-    # split
+
+    # split using ArgSplitter
     splitter_args = [ [current_dir, page_num, word] for page_num in range(number_of_pages)]
     j.splitter = ArgSplitter(args=splitter_args)
+
+    # merge using TextMerger
+    j.postprocessors.append(TextMerger(files=['stdout']))
 
 j.submit()
 
 
+
 '''
-Failsafe:
-Store the final count to a different file and 
-remove the earlier file so that re-running the job
-does not use the count from a previously run job
+Store result:
+1. Wait (1 min) until job finishes with 'completed' status.
+2. Extract the word counts from the merged file, calculate
+the total word count and store it to a file
 '''
 if job_name == 'count_it':
     start_time = time.time()
@@ -63,11 +68,22 @@ if job_name == 'count_it':
 
         continue
 
-    output_file = current_dir + '/' + job_name + '.txt'
-    copy_file = current_dir + '/' + job_name + '_final.txt'
+    output_file = j.outputdir + 'stdout'
+    with open(output_file, 'r') as f:
+        lines = f.readlines()
+    
+    result = 0
+    for line in lines:
+        # Check if the line does not start with '#'
+        if not line.startswith('#'):
+            try:
+                result += int(line.strip())
+            except ValueError:
+                continue
 
-    if os.path.isfile(output_file):
-        shutil.copy(output_file, copy_file)
-        os.remove(output_file)
-    else:
-        print(f"The original file '{output_file}' does not exist.")
+    result_file = current_dir + '/' + job_name + '.txt'
+    with open(result_file, 'w') as f:
+        f.write(str(result))
+
+    print(f"Word count has been stored in the same directory as this script: {result_file}")
+    print(f"\nRun this command to see the result: cat {result_file}")
