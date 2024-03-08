@@ -9,6 +9,7 @@ from tqdm import tqdm
 # globals
 call_script = 'run_initial_task.sh'
 word_counting_script = 'count_it.py'
+split_pdf_script = 'split_pdf.py'
 pdf_file = 'LHC.pdf'
 current_dir = os.getcwd()
 
@@ -28,7 +29,7 @@ def create_call_script():
             """)
         else:
             script.write(f"""#!/bin/bash
-            python3 "{current_dir}/{python_script}" "{current_dir}"
+            python3 "{current_dir}/{python_script}" "{current_dir}" {pdf_file}
             """)
 
     # make it executable
@@ -128,3 +129,6 @@ job, job_name = submit_ganga_job(script)
 
 if script == word_counting_script:
     store_word_count(job, job_name)
+elif script == split_pdf_script:
+    print(f"\nExtracted pages from {pdf_file} have been saved in the folder {current_dir}/extracted_pages")
+    print(f"\nFor a detailed stdout, run the command: jobs({job.id}).peek('stdout')")
