@@ -45,7 +45,7 @@ def check_file_existence(filepath):
 def submit_ganga_job(python_script):
     job_name = os.path.splitext(python_script)[0]
 
-    j = Job(name=job_name)
+    j = Job(name=job_name, backend=Local())
     j.application = Executable()
     j.application.exe = File(call_script)
 
