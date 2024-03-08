@@ -7,19 +7,20 @@ from PyPDF2 import PdfReader
 from collections import Counter
 
 def get_arguments():
-    if len(sys.argv) != 4:
-        print(f"You must specify all 3 parameters as arguments.\
-            parameters are: current directory, page number, word")
+    if len(sys.argv) != 5:
+        print(f"You must specify all 4 parameters as arguments.\
+            parameters are: current directory, page number, word, pdf file name")
         sys.exit(1)
     
     current_dir = sys.argv[1]
     page_num = sys.argv[2]
     word = sys.argv[3]
+    pdf_file = sys.argv[4]
 
-    return current_dir, page_num, word
+    return tuple(sys.argv[1:5])
 
 def preprocess_text(text):
-    # replace square brackets used for citations
+    # first, replace all square brackets used for citations
     square_brackets = r'\[|\]'
     
     # replace other non-alphanumeric character
@@ -42,6 +43,6 @@ def count_word(file, page_num, word):
 
 
 if __name__ == '__main__':
-    current_dir, page_num, word = get_arguments()
-    input_pdf = current_dir + '/LHC.pdf'
+    current_dir, page_num, word, pdf_file = get_arguments()
+    input_pdf = os.path.join(current_dir, pdf_file)
     print((count_word(input_pdf, page_num, word)))
