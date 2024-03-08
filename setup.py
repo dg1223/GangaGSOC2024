@@ -13,6 +13,7 @@ setup(
           'pytest',
           'ganga',
           'PyPDF2',
+          'tqdm',
       ],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
