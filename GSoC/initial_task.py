@@ -118,9 +118,10 @@ def store_word_count(job, job_name):
     with open(result_file, 'w') as f:
         f.write(str(word_count))
 
-    print(f"Frequency of the word 'it' = {word_count}\n")
-    print(f"The word count has been stored in the same directory as this script: {result_file}")
+    print(f">>> Frequency of the word 'it' = {word_count} <<<\n")
+    print(f"The word count has been stored in the same directory as this script: {result_file}")    
     print(f"\nRun this command to see the stored result: cat {result_file}")
+    print(f"\nRun this command to check the output from TextMerger: jobs({job.id}).peek('stdout')")
 
 
 # Run script
