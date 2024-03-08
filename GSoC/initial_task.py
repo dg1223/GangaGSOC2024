@@ -8,7 +8,9 @@ from PyPDF2 import PdfReader
 # globals
 call_script = 'run_initial_task.sh'
 word_counting_script = 'count_it.py'
+pdf_file = 'LHC.pdf'
 current_dir = os.getcwd()
+
 
 def create_call_script():
     if len(sys.argv) != 2:
@@ -21,7 +23,7 @@ def create_call_script():
     with open(call_script, 'w') as script:
         if python_script == word_counting_script:
             script.write(f"""#!/bin/bash
-            python3 "{current_dir}/{python_script}" "$1" "$2" "$3"
+            python3 "{current_dir}/{python_script}" "$1" "$2" "$3" {pdf_file}
             """)
         else:
             script.write(f"""#!/bin/bash
@@ -33,6 +35,12 @@ def create_call_script():
 
     return python_script
 
+def check_file_existence(filepath):    
+    if not os.path.exists(filepath):
+        print(f"\nThe file '{filepath}' does not exist.")
+        print("Please store the file in the current directory and rerun the job.\n")
+        sys.exit(1)
+
 def submit_ganga_job(python_script):
     job_name = os.path.splitext(python_script)[0]
 
@@ -42,7 +50,9 @@ def submit_ganga_job(python_script):
 
     # Create splitter for the word count job
     if python_script == word_counting_script:
-        reader = PdfReader('LHC.pdf')
+        input_pdf = os.path.join(current_dir, pdf_file)
+        check_file_existence(input_pdf)
+        reader = PdfReader(input_pdf)
         number_of_pages = len(reader.pages)
         word = 'it'
 
@@ -81,7 +91,7 @@ def store_word_count(job, job_name):
     start_time = time.time()
     timeout = 120 # 2 minutes
 
-    print("Waiting for job to finish. Maximum wait time: 2 minutes\n")
+    print("\nWaiting for job to finish. Maximum wait time: 2 minutes\n")
 
     while job.status != 'completed':
         # timeout if job is still running, probably an issue
@@ -99,8 +109,9 @@ def store_word_count(job, job_name):
     with open(result_file, 'w') as f:
         f.write(str(word_count))
 
-    print(f"Word count has been stored in the same directory as this script: {result_file}")
-    print(f"\nRun this command to see the result: cat {result_file}")
+    print(f"Frequency of the word 'it' = {word_count}\n")
+    print(f"The word count has been stored in the same directory as this script: {result_file}")
+    print(f"\nRun this command to see the stored result: cat {result_file}")
 
 
 # Run script
