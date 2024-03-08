@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-
 import sys
 import re
 import os
@@ -44,4 +43,5 @@ def count_word(file, page_num, word):
 
 if __name__ == '__main__':
     current_dir, page_num, word = get_arguments()
-    print((count_word(current_dir + '/LHC.pdf', page_num, word)))
+    input_pdf = current_dir + '/LHC.pdf'
+    print((count_word(input_pdf, page_num, word)))
