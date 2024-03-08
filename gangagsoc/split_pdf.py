@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import sys
 import os
-from PyPDF2 import PdfReader, PdfWriter
+from pypdf import PdfReader, PdfWriter
 
 def get_current_directory():
     if len(sys.argv) != 3:

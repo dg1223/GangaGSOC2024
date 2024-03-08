@@ -12,7 +12,7 @@ setup(
     install_requires=[
           'pytest',
           'ganga',
-          'PyPDF2',
+          'pypdf',
           'tqdm',
       ],
     classifiers=[

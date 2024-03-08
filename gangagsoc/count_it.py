@@ -3,7 +3,7 @@ import sys
 import re
 import os
 import shutil
-from PyPDF2 import PdfReader
+from pypdf import PdfReader
 from collections import Counter
 
 def get_arguments():

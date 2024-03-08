@@ -3,7 +3,7 @@ import os
 import shutil
 import sys
 import time
-from PyPDF2 import PdfReader
+from pypdf import PdfReader
 from tqdm import tqdm
 
 # globals
