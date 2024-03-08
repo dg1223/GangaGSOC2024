@@ -99,8 +99,6 @@ def store_word_count(job, job_name):
             print("Timeout reached. Cannot print results. Exiting job...")
             return
 
-        continue
-
     merged_output = job.outputdir + 'stdout'
     
     word_count = count_frequency(merged_output)
