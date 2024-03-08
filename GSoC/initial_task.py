@@ -4,6 +4,7 @@ import shutil
 import sys
 import time
 from PyPDF2 import PdfReader
+from tqdm import tqdm
 
 # globals
 call_script = 'run_initial_task.sh'
@@ -84,7 +85,7 @@ def count_frequency(output_file):
 
 def store_word_count(job, job_name):
     '''
-    1. Wait (1 min) until job finishes with 'completed' status.
+    1. Wait (2 mins) until job finishes with 'completed' status.
     2. Extract the word counts from the merged file, calculate
     the total word count and store it to a file
     '''
@@ -93,11 +94,20 @@ def store_word_count(job, job_name):
 
     print("\nWaiting for job to finish. Maximum wait time: 2 minutes\n")
 
-    while job.status != 'completed':
-        # timeout if job is still running, probably an issue
-        if time.time() - start_time > timeout:
-            print("Timeout reached. Cannot print results. Exiting job...")
-            return
+    with tqdm(total = timeout, \
+        leave=False, \
+        bar_format='{elapsed}') as progress_bar:
+        while job.status != 'completed':
+            # update progress bar
+            elapsed_time = time.time() - start_time
+            progress_bar.update(elapsed_time - progress_bar.n)
+
+            # timeout if job is still running, there's probably an issue
+            if elapsed_time > timeout:
+                print("Timeout reached. Cannot print results. Exiting job...")
+                return
+
+            time.sleep(1)
 
     merged_output = job.outputdir + 'stdout'
     
