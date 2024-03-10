@@ -123,13 +123,25 @@ def store_word_count(job, job_name):
     print(f"\nRun this command to see the stored result: cat {result_file}")
     print(f"\nRun this command to check the output from TextMerger: jobs({job.id}).peek('stdout')")
 
+def execute_initial_task():
+    script = create_call_script()
+    job, job_name = submit_ganga_job(script)
 
-# Run script
-script = create_call_script()
-job, job_name = submit_ganga_job(script)
+    if script == word_counting_script:
+        store_word_count(job, job_name)
+    elif script == split_pdf_script:
+        print(f"\nExtracted pages from {pdf_file} have been saved in the folder {current_dir}/extracted_pages")
+        print(f"\nFor a detailed stdout, run the command: jobs({job.id}).peek('stdout')")
 
-if script == word_counting_script:
-    store_word_count(job, job_name)
-elif script == split_pdf_script:
-    print(f"\nExtracted pages from {pdf_file} have been saved in the folder {current_dir}/extracted_pages")
-    print(f"\nFor a detailed stdout, run the command: jobs({job.id}).peek('stdout')")
+
+# Prevent autorun if script is being imported by test_InitialTask.py
+if os.getenv("FROM_TEST_SCRIPT") == "true":
+    RUN_INITIAL_TASK = False
+else:
+    RUN_INITIAL_TASK = True
+
+if RUN_INITIAL_TASK:
+    execute_initial_task()
+else:
+    from ganga.ganga import ganga
+    from ganga import Job, Local, Executable, File, ArgSplitter, TextMerger
