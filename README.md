@@ -1,3 +1,5 @@
+[![CI](https://github.com/dg1223/GangaGSoC2024/actions/workflows/testing.yml/badge.svg)](https://github.com/dg1223/GangaGSoC2024/actions/workflows/testing.yml)
+
 # Challenge for Ganga projects in GSoC 2024
 
 The challenge that forms part of the Ganga projects in GSoC is divided up into two pieces.
