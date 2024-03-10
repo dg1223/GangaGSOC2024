@@ -41,8 +41,17 @@ def count_word(file, page_num, word):
 
         return Counter(clean_text.split())[word]
 
-
-if __name__ == '__main__':
+def execute_script():
     current_dir, page_num, word, pdf_file = get_arguments()
     input_pdf = os.path.join(current_dir, pdf_file)
     print((count_word(input_pdf, page_num, word)))
+
+
+# Prevent autorun if script is being imported by test_InitialTask.py
+if os.getenv("FROM_TEST_SCRIPT") == "true" or os.getenv("FROM_INIT") == "true":
+    RUN_INITIAL_TASK = False
+else:
+    RUN_INITIAL_TASK = True
+
+if RUN_INITIAL_TASK:
+    execute_script()

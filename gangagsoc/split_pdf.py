@@ -33,8 +33,17 @@ def split_pdf(file):
 
         print(f"Extracted page {page_num+1} from {pdf_file} and saved as {filename}")
 
-
-if __name__ == '__main__':
+def execute_script():
     current_dir, pdf_file = get_current_directory()
     filepath = os.path.join(current_dir, pdf_file)
     split_pdf(filepath)
+
+
+# Prevent autorun if script is being imported by test_InitialTask.py
+if os.getenv("FROM_TEST_SCRIPT") == "true" or os.getenv("FROM_INIT") == "true":
+    RUN_INITIAL_TASK = False
+else:
+    RUN_INITIAL_TASK = True
+
+if RUN_INITIAL_TASK:
+    execute_script()
