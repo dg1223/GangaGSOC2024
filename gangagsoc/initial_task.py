@@ -14,12 +14,12 @@ pdf_file = 'LHC.pdf'
 current_dir = os.getcwd()
 
 
-def create_call_script():
-    if len(sys.argv) != 2:
+def create_call_script(script=None):
+    if not script and len(sys.argv) != 2:
         print(f"You must specify the Python file as an argument")
         sys.exit(1)
 
-    python_script = sys.argv[1]    
+    python_script = script if script else sys.argv[1]    
 
     # Create a bash script that will run the specified Python script
     with open(call_script, 'w') as script:
@@ -139,7 +139,7 @@ if os.getenv("FROM_TEST_SCRIPT") == "true" or os.getenv("FROM_INIT") == "true":
     RUN_INITIAL_TASK = False
 else:
     RUN_INITIAL_TASK = True
-
+    
 if RUN_INITIAL_TASK:
     execute_initial_task()
 else:
