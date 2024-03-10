@@ -49,14 +49,16 @@ class TestInitialTask(unittest.TestCase):
         # remove the intermediate call script after testing
         os.remove('run_initial_task.sh')
 
-    # def testCountFrequency(self):
-    #     from initial_task import count_frequency
+    def testCountFrequency(self):
+        from gangagsoc.initial_task import count_frequency
 
-    #     output_file = "test_output.txt"
-    #     with open(output_file, "w") as f:
-    #         f.write("1\n2\n3\n")
+        output_file = "test_output.txt"
+        with open(output_file, "w") as f:
+            f.write("1\n2\n3\n")
 
-    #     self.assertEqual(count_frequency(output_file), 6)
+        self.assertEqual(count_frequency(output_file), 6)
+
+        os.remove('test_output.txt')
 
     # def testStoreWordCount(self):
     #     from initial_task import store_word_count
