@@ -1,27 +1,13 @@
 # from ganga.GangaTest.Framework.utils import sleep_until_completed, file_contains
-from ganga.ganga import ganga
-from ganga import Job, Local
 import os
 import unittest
 import shutil
+from ganga.ganga import ganga
+from ganga import Job, Local
 
 os.environ["FROM_TEST_SCRIPT"] = "true"
 
-# No need to do setUp and tearDown if you are
-# inheriting from the GangaUnitTest class
 class TestInitialTask(unittest.TestCase):
-    # def setUp(self):
-    #     # Create a directory to mimic the structure and avoid file conflicts
-    #     os.mkdir("initial_task_test")
-    #     os.chdir("initial_task_test")
-
-    #     # Copy LHC.pdf into the dummy directory
-    #     shutil.copyfile('../LHC.pdf', 'LHC.pdf')
-
-
-    # def tearDown(self):
-    #     os.remove('../run_initial_task.sh')
-
     def testCreateCallScript(self):
         from gangagsoc.initial_task import create_call_script        
 
