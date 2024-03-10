@@ -91,9 +91,9 @@ def store_word_count(job, job_name):
     the total word count and store it to a file
     '''
     start_time = time.time()
-    timeout = 120 # 2 minutes
+    timeout = 60 # 1 minute
 
-    print("\nWaiting for job to finish. Maximum wait time: 2 minutes\n")
+    print("\nWaiting for job to finish. Maximum wait time: 1 minute\n")
 
     with tqdm(total = timeout, \
         leave=False, \
