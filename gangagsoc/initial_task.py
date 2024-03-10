@@ -135,7 +135,7 @@ def execute_initial_task():
 
 
 # Prevent autorun if script is being imported by test_InitialTask.py
-if os.getenv("FROM_TEST_SCRIPT") == "true":
+if os.getenv("FROM_TEST_SCRIPT") == "true" or os.getenv("FROM_INIT") == "true":
     RUN_INITIAL_TASK = False
 else:
     RUN_INITIAL_TASK = True
