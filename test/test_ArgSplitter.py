@@ -1,4 +1,3 @@
-from ganga.ganga import ganga
 from ganga.GangaCore.testlib.GangaUnitTest import GangaUnitTest
 
 
