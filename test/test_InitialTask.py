@@ -52,7 +52,13 @@ class TestInitialTask(unittest.TestCase):
         root_dir = os.path.dirname(current_dir)
         parent_dir = 'gangagsoc'
         filepath = os.path.join(root_dir, parent_dir, word_counting_script)
-        shutil.copy(filepath, word_counting_script)
+
+        src = '/home/runner/work/GangaGSoC2024/gangagsoc/count_it.py'
+        current = '/home/runner/work/GangaGSoC2024/test'
+        root = '/home/runner/work/GangaGSoC2024'
+        parent = 'gangagsoc'
+
+        shutil.copy(current_dir, root_dir)
 
         j, job_name = submit_ganga_job(word_counting_script)
 
