@@ -1,6 +1,7 @@
 import os
 import unittest
 import shutil
+import subprocess
 from ganga.GangaTest.Framework.utils import sleep_until_completed
 
 os.environ["FROM_TEST_SCRIPT"] = "true"
@@ -13,7 +14,7 @@ class TestInitialTask(unittest.TestCase):
     def testCreateCallScript(self):
         from gangagsoc.initial_task import create_call_script
 
-        script = create_call_script(word_counting_script)
+        script, _ = create_call_script(word_counting_script)
 
         # check if wrapper bash script exists in current directory
         current_dir = os.getcwd()
@@ -58,8 +59,8 @@ class TestInitialTask(unittest.TestCase):
 
         self.tryFileCopy(root_dir, current_dir, parent_dir, word_counting_script)
 
-        script = create_call_script(word_counting_script)
-        j, job_name = submit_ganga_job(script)
+        script, _ = create_call_script(word_counting_script)
+        j, job_name = submit_ganga_job(script, current_dir)
 
         self.assertEqual(j.name, job_name)
         self.assertEqual(j.backend.__class__, Local)
@@ -92,11 +93,9 @@ class TestInitialTask(unittest.TestCase):
         parent_dir = 'gangagsoc'
 
         self.tryFileCopy(root_dir, current_dir, parent_dir, split_pdf_script)
-        print(os.path.join(root_dir, parent_dir, split_pdf_script))
-        print(os.path.join(current_dir, parent_dir, split_pdf_script))
 
-        script = create_call_script(split_pdf_script)
-        j, job_name = submit_ganga_job(script)
+        script, _ = create_call_script(split_pdf_script)
+        j, job_name = submit_ganga_job(script, current_dir)
 
         self.assertEqual(j.name, job_name)
         self.assertEqual(j.backend.__class__, Local)
@@ -128,6 +127,7 @@ class TestInitialTask(unittest.TestCase):
         from ganga import Job, Local
         from gangagsoc.initial_task import store_word_count
 
+        current_dir = os.getcwd()
         job_name = "test_store_word_count"
         j = Job(name=job_name, backend=Local())
         j.submit()
@@ -139,7 +139,7 @@ class TestInitialTask(unittest.TestCase):
         with open(output_file, "w") as f:
             f.write("#sometext\n1\n2\n3\n#sometest\n")
         
-        store_word_count(j, job_name)
+        store_word_count(j, job_name, current_dir)
 
         result_file = job_name + '.txt'
         self.assertTrue(os.path.exists(result_file))
@@ -149,4 +149,34 @@ class TestInitialTask(unittest.TestCase):
         self.assertEqual(count, '6')
 
         j.remove()
+        os.remove(result_file)
+
+    # Mimic a complete system call to count_it.py
+    def testCountIt(self):
+        current_dir = os.getcwd()
+        root_dir = os.path.dirname(current_dir)
+        parent_dir = 'gangagsoc'
+        wrapper_script = "initial_task.py"
+        main_script = "count_it.py"
+
+        # for local runs
+        wrapper_path = os.path.join(root_dir, parent_dir, wrapper_script)
+        main_path = os.path.join(root_dir, parent_dir, main_script)
+
+        # for CI runs
+        if not (os.path.exists(wrapper_path) and os.path.exists(main_path)):            
+            wrapper_path = os.path.join(current_dir, parent_dir, wrapper_script)
+            main_path = os.path.join(current_dir, parent_dir, main_script)
+
+        os.environ["TEST_SCRIPT_OVERRIDE"] = "true"
+        command = ["python3", wrapper_path, main_path]
+        subprocess.run(command)
+
+        result_file = 'count_it.txt'
+        self.assertTrue(os.path.exists(result_file))
+
+        with open(result_file, 'r') as f:
+            count = f.read().strip(' \n')
+        self.assertEqual(count, '30')
+
         os.remove(result_file)
