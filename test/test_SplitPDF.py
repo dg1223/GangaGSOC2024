@@ -11,10 +11,6 @@ split_pdf_script = 'split_pdf.py'
 
 
 class TestSplitPDF(unittest.TestCase):
-    def setUp(self):
-        from gangagsoc import initial_task
-        from gangagsoc import split_pdf
-
     def testGetCurrentDirectory(self):
         from gangagsoc.split_pdf import get_current_directory
 
