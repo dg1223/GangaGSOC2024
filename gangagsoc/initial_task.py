@@ -38,13 +38,7 @@ def create_call_script(script=None):
 
     python_script = script if script else sys.argv[1]
     python_script = os.path.basename(python_script)
-
     cur_dir = set_current_dir(current_dir)
-
-    print()
-    print(f"{python_script = }")
-    print(f"{cur_dir = }")
-    print(f"root dir = {os.path.dirname(cur_dir)}")
 
     # Create a bash script that will run the specified Python script
     with open(call_script, 'w') as script:
@@ -69,13 +63,15 @@ def check_file_existence(filepath):
         sys.exit(1)
 
 def submit_ganga_job(python_script, cur_dir):
-    job_name = os.path.splitext(python_script)[0]
+    script_filename = os.path.basename(python_script)
+    job_name = os.path.splitext(script_filename)[0]
+
     j = Job(name=job_name, backend=Local())
     j.application = Executable()
     j.application.exe = File(call_script)
 
     # Create splitter for the word count job
-    if python_script == word_counting_script:
+    if script_filename == word_counting_script:
         input_pdf = os.path.join(cur_dir, pdf_file)
         check_file_existence(input_pdf)
         reader = PdfReader(input_pdf)
@@ -141,9 +137,6 @@ def store_word_count(job, job_name, cur_dir, cur_dir_from_outside=None):
         while current_status != 'completed' and job.status != 'completed':
             if os.getenv("TEST_SCRIPT_OVERRIDE") == "true":
                 current_status = jobs(job.id).status
-                print(f" {current_status = }")
-
-            print(f" status = {job.status}")
 
             # update progress bar
             elapsed_time = time.time() - start_time
@@ -168,10 +161,10 @@ def store_word_count(job, job_name, cur_dir, cur_dir_from_outside=None):
     with open(result_file, 'w') as f:
         f.write(str(word_count))
 
-    print(f">>> Frequency of the word 'it' = {word_count} <<<\n")
+    print(f"\n>>> Frequency of the word 'it' = {word_count} <<<\n")
     print(f"The word count has been stored in the same directory as this script: {result_file}")    
     print(f"\nRun this command to see the stored result: cat {result_file}")
-    print(f"\nRun this command to check the output from TextMerger: jobs({job.id}).peek('stdout')")
+    print(f"\nRun this command to check the output from TextMerger: jobs({job.id}).peek('stdout')\n")
 
 def execute_initial_task():
     script, cur_dir = create_call_script()
@@ -211,3 +204,5 @@ elif os.getenv("TEST_SCRIPT_OVERRIDE") == "true":
 else:
     from ganga.ganga import ganga
     from ganga import Job, Local, Executable, File, ArgSplitter, TextMerger
+    from GangaCore.Core.GangaRepository import getRegistryProxy
+    from GangaCore.Core import monitoring_component
