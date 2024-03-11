@@ -22,7 +22,7 @@ def set_current_dir(cur_dir):
     if leaf_dir == 'test':
         cur_dir = os.path.join(root_dir, parent_dir)
 
-    shutil.copy(cur_dir, root_dir)
+    shutil.copy(cur_dir, leaf_dir)
     # for CI runs
     # if not (os.path.exists(wrapper_path) and os.path.exists(main_path)):            
     #     wrapper_path = os.path.join(current_dir, parent_dir, wrapper_script)
