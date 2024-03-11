@@ -164,7 +164,6 @@ class TestInitialTask(unittest.TestCase):
         wrapper_path = os.path.join(root_dir, parent_dir, wrapper_script)
         main_path = os.path.join(root_dir, parent_dir, main_script)
         result_file = os.path.join(root_dir, parent_dir, 'count_it.txt')
-        shutil.copy(result_file, main_path)
 
         # for CI runs
         if not os.path.exists(wrapper_path) and \
@@ -173,6 +172,7 @@ class TestInitialTask(unittest.TestCase):
             main_path = os.path.join(current_dir, parent_dir, main_script)
             result_file = os.path.join(current_dir, parent_dir, result_file)
         
+        shutil.copy(result_file, main_path)
         os.environ["TEST_SCRIPT_OVERRIDE"] = "true"
         command = ["python3", wrapper_path, main_path]
         subprocess.run(command)
