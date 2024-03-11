@@ -28,4 +28,6 @@ jobs:
           . ~/venv/bin/activate
           pwd
           ls -a
+          ls "$(pwd)"/test
+          ls "$(pwd)/gangagsoc"
           python -m pytest test
