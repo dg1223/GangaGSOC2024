@@ -159,6 +159,7 @@ class TestInitialTask(unittest.TestCase):
         test_dir = 'test'
         wrapper_script = "initial_task.py"
         main_script = "count_it.py"
+        shutil.copy(current_dir, root_dir)
 
         # for local runs
         wrapper_path = os.path.join(root_dir, parent_dir, wrapper_script)
@@ -176,7 +177,6 @@ class TestInitialTask(unittest.TestCase):
         command = ["python3", wrapper_path, main_path]
         subprocess.run(command)
 
-        shutil.copy(current_dir, root_dir)
         self.assertTrue(os.path.exists(result_file))
 
         with open(result_file, 'r') as f:
