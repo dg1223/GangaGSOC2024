@@ -170,7 +170,7 @@ class TestInitialTask(unittest.TestCase):
             not os.path.exists(main_path):
             wrapper_path = os.path.join(current_dir, parent_dir, wrapper_script)
             main_path = os.path.join(current_dir, parent_dir, main_script)
-            result_file = os.path.join(current_dir, test_dir, result_file)
+            result_file = os.path.join(current_dir, parent_dir, result_file)
         
         os.environ["TEST_SCRIPT_OVERRIDE"] = "true"
         command = ["python3", wrapper_path, main_path]

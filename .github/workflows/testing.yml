@@ -26,8 +26,4 @@ jobs:
       - name: Test with pytest
         run: |
           . ~/venv/bin/activate
-          pwd
-          ls -a
-          ls "$(pwd)"/test
-          ls "$(pwd)/gangagsoc"
           python -m pytest test
