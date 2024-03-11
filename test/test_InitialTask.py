@@ -176,7 +176,7 @@ class TestInitialTask(unittest.TestCase):
         command = ["python3", wrapper_path, main_path]
         subprocess.run(command)
 
-        shutil.copy(result_file, os.getcwd())
+        shutil.copy(current_dir, root_dir)
         self.assertTrue(os.path.exists(result_file))
 
         with open(result_file, 'r') as f:
