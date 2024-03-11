@@ -10,11 +10,6 @@ word_counting_script = 'count_it.py'
 split_pdf_script = 'split_pdf.py'
 
 class TestInitialTask(unittest.TestCase):
-    def setUp(self):
-        from gangagsoc import initial_task
-        from gangagsoc import count_it
-        from gangagsoc import split_pdf
-
     def testCreateCallScript(self):
         from gangagsoc.initial_task import create_call_script
 
