@@ -156,6 +156,7 @@ class TestInitialTask(unittest.TestCase):
         current_dir = os.getcwd()
         root_dir = os.path.dirname(current_dir)
         parent_dir = 'gangagsoc'
+        test_dir = 'test'
         wrapper_script = "initial_task.py"
         main_script = "count_it.py"
 
@@ -171,13 +172,11 @@ class TestInitialTask(unittest.TestCase):
 
             wrapper_path = os.path.join(current_dir, parent_dir, wrapper_script)
             main_path = os.path.join(current_dir, parent_dir, main_script)
-            result_file = os.path.join(current_dir, parent_dir, result_file)
+            result_file = os.path.join(current_dir, test_dir, result_file)
 
         os.environ["TEST_SCRIPT_OVERRIDE"] = "true"
         command = ["python3", wrapper_path, main_path]
         subprocess.run(command)
-
-        shutil.copy(os.getcwd(), result_file)
 
         self.assertTrue(os.path.exists(result_file))
 
