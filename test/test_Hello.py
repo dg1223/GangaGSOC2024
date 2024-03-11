@@ -9,7 +9,7 @@ hello_script = 'hello.py'
 
 
 class TestHello(unittest.TestCase):
-    # Mimics a complete system call to the job
+    # Mimics a complete system call to hello.py
     def testExecuteScript(self):
         from gangagsoc.hello import execute_script
 
