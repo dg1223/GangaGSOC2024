@@ -6,8 +6,10 @@ def execute_script():
     j.submit()
     print(f"\nTo check the job's stdout, run the command: jobs({j.id}).peek('stdout')")
 
+    return j
+
 # Prevent autorun if script is being imported by test_InitialTask.py
-if os.getenv("FROM_TEST_SCRIPT") == "true" or os.getenv("FROM_INIT") == "true":
+if os.getenv("FROM_TEST_SCRIPT") == "true":
     RUN_INITIAL_TASK = False
 else:
     RUN_INITIAL_TASK = True
@@ -16,4 +18,4 @@ if RUN_INITIAL_TASK:
     execute_script()
 else:
     from ganga.ganga import ganga
-    from ganga import Job
+    from ganga import Job, Local
