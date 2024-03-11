@@ -53,5 +53,5 @@ if os.getenv("FROM_TEST_SCRIPT") == "true":
 else:
     RUN_INITIAL_TASK = True
 
-if RUN_INITIAL_TASK:
+if RUN_INITIAL_TASK or os.getenv("TEST_SCRIPT_OVERRIDE") == "true":
     execute_script()
