@@ -45,7 +45,6 @@ def check_file_existence(filepath):
 
 def submit_ganga_job(python_script):
     job_name = os.path.splitext(python_script)[0]
-
     j = Job(name=job_name, backend=Local())
     j.application = Executable()
     j.application.exe = File(call_script)
@@ -86,7 +85,7 @@ def count_frequency(output_file):
 
 def store_word_count(job, job_name):
     '''
-    1. Wait (2 mins) until job finishes with 'completed' status.
+    1. Wait (1 min) until job finishes with 'completed' status.
     2. Extract the word counts from the merged file, calculate
     the total word count and store it to a file
     '''
@@ -132,6 +131,11 @@ def execute_initial_task():
     elif script == split_pdf_script:
         print(f"\nExtracted pages from {pdf_file} have been saved in the folder {current_dir}/extracted_pages")
         print(f"\nFor a detailed stdout, run the command: jobs({job.id}).peek('stdout')")
+    
+    try:
+        os.remove('run_initial_task.sh')
+    except FileNotFoundError:
+        print(f"run_initial_task.sh not found in {current_dir}")
 
 
 # Prevent autorun if script is being imported by test_InitialTask.py
