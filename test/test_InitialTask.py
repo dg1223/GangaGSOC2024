@@ -128,15 +128,30 @@ class TestInitialTask(unittest.TestCase):
 
         os.remove('test_output.txt')
 
-    # def testStoreWordCount(self):
-    #     from ganga.ganga import ganga
-    #     from ganga import Job
-    #     from gangagsoc.initial_task import store_word_count
+    def testStoreWordCount(self):
+        from ganga.ganga import ganga
+        from ganga import Job, Local
+        from gangagsoc.initial_task import store_word_count
 
-    #     job_name = "test_job"
-    #     j = Job(name=job_name)
+        job_name = "test_store_word_count"
+        j = Job(name=job_name, backend=Local())
+        j.submit()
+        sleep_until_completed(j)
+
+        output_file = os.path.join(j.outputdir, 'stdout')
+
+        # mimic merged output; overwrite default stdout
+        with open(output_file, "w") as f:
+            f.write("#sometext\n1\n2\n3\n#sometest\n")
         
-    #     store_word_count(j, job_name)
+        store_word_count(j, job_name)
 
-    #     self.assertTrue(os.path.exists(job_name + ".txt"))
-    #     j.remove()
+        result_file = job_name + '.txt'
+        self.assertTrue(os.path.exists(result_file))
+
+        with open(result_file, 'r') as f:
+            count = f.read().strip(' \n')
+        self.assertEqual(count, '6')
+
+        j.remove()
+        os.remove(result_file)
