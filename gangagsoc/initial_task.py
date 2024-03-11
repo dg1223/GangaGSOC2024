@@ -17,17 +17,19 @@ def set_current_dir(cur_dir):
     root_dir = os.path.dirname(cur_dir)
     parent_dir = 'gangagsoc'
 
+    shutil(cur_dir, root_dir)
     # for local runs
     leaf_dir = os.path.basename(cur_dir)
     if leaf_dir == 'test':
         cur_dir = os.path.join(root_dir, parent_dir)
 
-    return cur_dir
-
-    # # for CI runs
+    # for CI runs
     # if not (os.path.exists(wrapper_path) and os.path.exists(main_path)):            
     #     wrapper_path = os.path.join(current_dir, parent_dir, wrapper_script)
     #     main_path = os.path.join(current_dir, parent_dir, main_script)
+
+    return cur_dir
+
 
 def create_call_script(script=None):
     if not script and len(sys.argv) < 2:
