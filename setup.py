@@ -13,6 +13,7 @@ setup(
           'pytest',
           'ganga',
           'pypdf',
+          'FPDF',
           'tqdm',
       ],
     classifiers=[
