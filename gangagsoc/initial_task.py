@@ -83,7 +83,7 @@ def count_frequency(output_file):
 
     return word_count
 
-def store_word_count(job, job_name):
+def store_word_count(job, job_name, cur_dir=None):
     '''
     1. Wait (1 min) until job finishes with 'completed' status.
     2. Extract the word counts from the merged file, calculate
@@ -110,10 +110,11 @@ def store_word_count(job, job_name):
             time.sleep(1)
 
     merged_output = job.outputdir + 'stdout'
-    
     word_count = count_frequency(merged_output)
 
+    current_dir = os.getcwd() if not cur_dir else current_dir
     result_file = current_dir + '/' + job_name + '.txt'
+
     with open(result_file, 'w') as f:
         f.write(str(word_count))
 
