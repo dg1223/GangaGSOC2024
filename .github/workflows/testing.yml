@@ -26,4 +26,6 @@ jobs:
       - name: Test with pytest
         run: |
           . ~/venv/bin/activate
+          pwd
+          ls -a
           python -m pytest test
