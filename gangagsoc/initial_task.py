@@ -17,7 +17,7 @@ def set_current_dir(cur_dir):
     root_dir = os.path.dirname(cur_dir)
     parent_dir = 'gangagsoc'
 
-    shutil(cur_dir, root_dir)
+    shutil.copy(cur_dir, root_dir)
     # for local runs
     leaf_dir = os.path.basename(cur_dir)
     if leaf_dir == 'test':
