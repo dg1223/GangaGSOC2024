@@ -172,7 +172,6 @@ class TestInitialTask(unittest.TestCase):
             main_path = os.path.join(current_dir, parent_dir, main_script)
             result_file = os.path.join(current_dir, parent_dir, 'count_it.txt')
         
-        shutil.copy(result_file, main_path)
         os.environ["TEST_SCRIPT_OVERRIDE"] = "true"
         command = ["python3", wrapper_path, main_path]
         subprocess.run(command)
