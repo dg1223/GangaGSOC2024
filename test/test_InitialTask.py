@@ -1,6 +1,7 @@
 import os
 import unittest
 import shutil
+from ganga.GangaTest.Framework.utils import sleep_until_completed
 
 os.environ["FROM_TEST_SCRIPT"] = "true"
 
@@ -32,11 +33,12 @@ class TestInitialTask(unittest.TestCase):
         # simple test to see if ganga is working
         from ganga.ganga import ganga
         from ganga import Job
-        from ganga.GangaTest.Framework.utils import sleep_until_completed
+        
 
         j = Job()
         j.submit()
         self.assertTrue(sleep_until_completed(j, 60), 'Timeout on completing job')
+        self.assertEqual(j.status, 'completed')
         j.remove()
 
     def testSubmitGangaJob(self):
@@ -46,8 +48,10 @@ class TestInitialTask(unittest.TestCase):
         from ganga.GangaTest.Framework.utils import sleep_until_completed
 
         # get script into test directory for testing
-        main_dir = '../gangagsoc'
-        filepath = os.path.join(main_dir, word_counting_script)
+        current_dir = os.getcwd()
+        root_dir = os.path.dirname(current_dir)
+        parent_dir = 'gangagsoc'
+        filepath = os.path.join(root_dir, parent_dir, word_counting_script)
         shutil.copy(filepath, word_counting_script)
 
         j, job_name = submit_ganga_job(word_counting_script)
