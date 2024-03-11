@@ -159,12 +159,12 @@ class TestInitialTask(unittest.TestCase):
         test_dir = 'test'
         wrapper_script = "initial_task.py"
         main_script = "count_it.py"
-        shutil.copy(current_dir, root_dir)
 
         # for local runs
         wrapper_path = os.path.join(root_dir, parent_dir, wrapper_script)
         main_path = os.path.join(root_dir, parent_dir, main_script)
         result_file = os.path.join(root_dir, parent_dir, 'count_it.txt')
+        shutil.copy(result_file, main_path)
 
         # for CI runs
         if not os.path.exists(wrapper_path) and \
