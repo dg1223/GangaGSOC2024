@@ -151,6 +151,10 @@ class TestInitialTask(unittest.TestCase):
         j.remove()
         os.remove(result_file)
 
+'''
+These are complete system calls to count_it.py and split_pdf.py
+through the calling script initial_task.py
+'''
 class TestSystem(unittest.TestCase):
     # set up file paths to make system calls
     def setupPath(self, main_script, output):
@@ -188,28 +192,27 @@ class TestSystem(unittest.TestCase):
         self.assertEqual(count, '30')
 
         os.remove(result)
+        os.environ["TEST_SCRIPT_OVERRIDE"] = "true"
 
-    # # Mimic a complete system test of split_pdf.py
-    # def testSplitPDF(self):
-    #     wrapper, main, result = self.setupPath(split_pdf_script, 'extracted_pages')
+    # Mimic a complete system test of split_pdf.py
+    def testSplitPDF(self):
+        wrapper, main, result = self.setupPath(split_pdf_script, 'extracted_pages')
         
-    #     os.environ["TEST_SCRIPT_OVERRIDE"] = "true"
-    #     command = ["python3", wrapper, main]
-    #     output = subprocess.run(command, capture_output=True, text=True)
-    #     print(output.stdout)
-    #     print()
-    #     print(output.stderr)
+        os.environ["TEST_SCRIPT_OVERRIDE"] = "true"
+        command = ["python3", wrapper, main]
+        subprocess.run(command)
 
-    #     # self.assertTrue(os.path.exists(result))
+        self.assertTrue(os.path.exists(result))
 
-    #     # check if directory has 29 files
-    #     files = os.listdir(result)
-    #     number_of_files = len(files)
-    #     self.assertEqual(number_of_files, 29)
+        # check if directory has 29 files
+        files = os.listdir(result)
+        number_of_files = len(files)
+        self.assertEqual(number_of_files, 29)
 
-    #     # check if some filenames match with expected names
-    #     self.assertTrue(os.path.exists(os.path.join(result, 'LHC_page_1.pdf')))
-    #     self.assertTrue(os.path.exists(os.path.join(result, 'LHC_page_17.pdf')))
-    #     self.assertTrue(os.path.exists(os.path.join(result, 'LHC_page_29.pdf')))
+        # check if some filenames match with expected names
+        self.assertTrue(os.path.exists(os.path.join(result, 'LHC_page_1.pdf')))
+        self.assertTrue(os.path.exists(os.path.join(result, 'LHC_page_17.pdf')))
+        self.assertTrue(os.path.exists(os.path.join(result, 'LHC_page_29.pdf')))
 
-    #     shutil.rmtree(result)
+        shutil.rmtree(result)
+        os.environ["TEST_SCRIPT_OVERRIDE"] = "false"
