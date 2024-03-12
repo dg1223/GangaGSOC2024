@@ -151,35 +151,65 @@ class TestInitialTask(unittest.TestCase):
         j.remove()
         os.remove(result_file)
 
-    # Mimic a complete system call to count_it.py
-    def testCountIt(self):
+class TestSystem(unittest.TestCase):
+    # set up file paths to make system calls
+    def setupPath(self, main_script, output):
         current_dir = os.getcwd()
         root_dir = os.path.dirname(current_dir)
         parent_dir = 'gangagsoc'
-        test_dir = 'test'
         wrapper_script = "initial_task.py"
-        main_script = "count_it.py"
 
         # for local runs
         wrapper_path = os.path.join(root_dir, parent_dir, wrapper_script)
         main_path = os.path.join(root_dir, parent_dir, main_script)
-        result_file = os.path.join(root_dir, parent_dir, 'count_it.txt')
+        result = os.path.join(root_dir, parent_dir, output)
 
         # for CI runs
         if not os.path.exists(wrapper_path) and \
             not os.path.exists(main_path):
             wrapper_path = os.path.join(current_dir, parent_dir, wrapper_script)
             main_path = os.path.join(current_dir, parent_dir, main_script)
-            result_file = os.path.join(current_dir, parent_dir, 'count_it.txt')
+            result = os.path.join(current_dir, parent_dir, output)
+
+        return wrapper_path, main_path, result
+
+    # Mimic a complete system test of count_it.py
+    def testCountIt(self):
+        wrapper, main, result = self.setupPath(word_counting_script, 'count_it.txt')
         
         os.environ["TEST_SCRIPT_OVERRIDE"] = "true"
-        command = ["python3", wrapper_path, main_path]
+        command = ["python3", wrapper, main]
         subprocess.run(command)
 
-        self.assertTrue(os.path.exists(result_file))
+        self.assertTrue(os.path.exists(result))
 
-        with open(result_file, 'r') as f:
+        with open(result, 'r') as f:
             count = f.read().strip(' \n')
         self.assertEqual(count, '30')
 
-        os.remove(result_file)
+        os.remove(result)
+
+    # # Mimic a complete system test of split_pdf.py
+    # def testSplitPDF(self):
+    #     wrapper, main, result = self.setupPath(split_pdf_script, 'extracted_pages')
+        
+    #     os.environ["TEST_SCRIPT_OVERRIDE"] = "true"
+    #     command = ["python3", wrapper, main]
+    #     output = subprocess.run(command, capture_output=True, text=True)
+    #     print(output.stdout)
+    #     print()
+    #     print(output.stderr)
+
+    #     # self.assertTrue(os.path.exists(result))
+
+    #     # check if directory has 29 files
+    #     files = os.listdir(result)
+    #     number_of_files = len(files)
+    #     self.assertEqual(number_of_files, 29)
+
+    #     # check if some filenames match with expected names
+    #     self.assertTrue(os.path.exists(os.path.join(result, 'LHC_page_1.pdf')))
+    #     self.assertTrue(os.path.exists(os.path.join(result, 'LHC_page_17.pdf')))
+    #     self.assertTrue(os.path.exists(os.path.join(result, 'LHC_page_29.pdf')))
+
+    #     shutil.rmtree(result)
