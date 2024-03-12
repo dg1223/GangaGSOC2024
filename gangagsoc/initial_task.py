@@ -172,7 +172,7 @@ def execute_initial_task():
         store_word_count(job, job_name, cur_dir)
     elif script == split_pdf_script:
         print(f"\nExtracted pages from {pdf_file} have been saved in the folder {cur_dir}/extracted_pages")
-        print(f"\nFor a detailed stdout, run the command: jobs({job.id}).peek('stdout')")
+        print(f"\nFor a detailed stdout, run the command: jobs({job.id}).peek('stdout') in ganga prompt.\n")
     
     try:
         os.remove('run_initial_task.sh')
