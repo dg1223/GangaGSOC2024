@@ -16,7 +16,7 @@ class TestSplitPDF(unittest.TestCase):
 
         # simulate call to split_pdf.py through run_intial_task.sh from initial_task.py
         sys.argv = ["split_pdf.py", "current_dir", "pdf_file"]
-        self.assertEqual(get_current_directory(), ("current_dir", "pdf_file"))
+        self.assertEqual(get_current_directory(), ("current_dir", "pdf_file"), "Arguments not retrieved correctly.")
 
     def create_pdf_with_numbers(self):
         pdf_file = 'test_pdf.pdf'
@@ -41,9 +41,12 @@ class TestSplitPDF(unittest.TestCase):
 
         # test pdf splitting
         split_pdf(pdf_file, os.getcwd())
-        self.assertTrue(os.path.exists("extracted_pages/LHC_page_1.pdf"))
-        self.assertTrue(os.path.exists("extracted_pages/LHC_page_2.pdf"))
-        self.assertTrue(os.path.exists("extracted_pages/LHC_page_3.pdf"))
+        self.assertTrue(os.path.exists("extracted_pages/LHC_page_1.pdf"),\
+            "Page 1 of PDF not extracted.")
+        self.assertTrue(os.path.exists("extracted_pages/LHC_page_2.pdf"),\
+            "Page 2 of PDF not extracted.")
+        self.assertTrue(os.path.exists("extracted_pages/LHC_page_3.pdf"),\
+            "Page 3 of PDF not extracted.")
 
         # remove dummy files
         os.remove(pdf_file)
