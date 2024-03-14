@@ -20,8 +20,8 @@ class TestInitialTask(unittest.TestCase):
         current_dir = os.getcwd()
         filepath = os.path.join(current_dir, word_counting_script)
 
-        self.assertTrue(os.path.exists(wrapper_script))
-        self.assertTrue(os.access(wrapper_script, os.X_OK))
+        self.assertTrue(os.path.exists(wrapper_script), "Wrapper bash script doesn't exist.")
+        self.assertTrue(os.access(wrapper_script, os.X_OK), "Wrapper bash script is not executable.")
 
     # simple test to see if ganga is working
     def testCreateAndRemoveGangaJob(self):
@@ -32,7 +32,7 @@ class TestInitialTask(unittest.TestCase):
         j.submit()
 
         self.assertTrue(sleep_until_completed(j, 60), 'Timeout on completing job')
-        self.assertEqual(j.status, 'completed')
+        self.assertEqual(j.status, 'completed', 'Job did not complete successfully.')
         
         j.remove()
 
@@ -62,18 +62,18 @@ class TestInitialTask(unittest.TestCase):
         script, _ = create_call_script(word_counting_script)
         j, job_name = submit_ganga_job(script, current_dir)
 
-        self.assertEqual(j.name, job_name)
-        self.assertEqual(j.backend.__class__, Local)
-        self.assertIsNotNone(j.application)
-        self.assertIsNotNone(j.splitter)
-        self.assertEqual(len(j.postprocessors), 1)
+        self.assertEqual(j.name, job_name, 'Job names do not match.')
+        self.assertEqual(j.backend.__class__, Local, 'Job backend is not local.')
+        self.assertIsNotNone(j.application, 'Application is not defined.')
+        self.assertIsNotNone(j.splitter, 'Splitter is not defined.')
+        self.assertEqual(len(j.postprocessors), 1), 'Postprocessors not defined correctly.'
 
         # there should be a subjob for each page of LHC.pdf
-        self.assertEqual(len(j.subjobs), 29)
+        self.assertEqual(len(j.subjobs), 29, 'Number of subjobs is not 29 as in the 29-page PDF.')
 
         # wait for job completion
         sleep_until_completed(j)
-        self.assertEqual(j.status, 'completed')
+        self.assertEqual(j.status, 'completed', 'Job did not complete successfully.')
         
         j.remove()
 
@@ -97,13 +97,13 @@ class TestInitialTask(unittest.TestCase):
         script, _ = create_call_script(split_pdf_script)
         j, job_name = submit_ganga_job(script, current_dir)
 
-        self.assertEqual(j.name, job_name)
-        self.assertEqual(j.backend.__class__, Local)
-        self.assertIsNotNone(j.application)
+        self.assertEqual(j.name, job_name, 'Job names do not match.')
+        self.assertEqual(j.backend.__class__, Local, 'Job backend is not local.')
+        self.assertIsNotNone(j.application, 'Application is not defined.')
 
         # wait for job completion
         sleep_until_completed(j)
-        self.assertEqual(j.status, 'completed')
+        self.assertEqual(j.status, 'completed', 'Job did not complete successfully.')
         
         j.remove()
 
@@ -118,7 +118,7 @@ class TestInitialTask(unittest.TestCase):
         with open(output_file, "w") as f:
             f.write("1\n2\n3\n")
 
-        self.assertEqual(count_frequency(output_file), 6)
+        self.assertEqual(count_frequency(output_file), 6, 'Frequency count is incorrect.')
 
         os.remove('test_output.txt')
 
@@ -142,11 +142,11 @@ class TestInitialTask(unittest.TestCase):
         store_word_count(j, job_name, current_dir)
 
         result_file = job_name + '.txt'
-        self.assertTrue(os.path.exists(result_file))
+        self.assertTrue(os.path.exists(result_file), 'Result file does not exist.')
 
         with open(result_file, 'r') as f:
             count = f.read().strip(' \n')
-        self.assertEqual(count, '6')
+        self.assertEqual(count, '6', 'Stored word count is incorrect.')
 
         j.remove()
         os.remove(result_file)
@@ -185,7 +185,7 @@ class TestSystem(unittest.TestCase):
         command = ["python3", wrapper, main]
         subprocess.run(command)
 
-        self.assertTrue(os.path.exists(result))
+        self.assertTrue(os.path.exists(result), 'Result file does not exist.')
 
         with open(result, 'r') as f:
             count = f.read().strip(' \n')
@@ -202,12 +202,12 @@ class TestSystem(unittest.TestCase):
         command = ["python3", wrapper, main]
         subprocess.run(command)
 
-        self.assertTrue(os.path.exists(result))
+        self.assertTrue(os.path.exists(result), 'Result directory does not exist.')
 
         # check if directory has 29 files
         files = os.listdir(result)
         number_of_files = len(files)
-        self.assertEqual(number_of_files, 29)
+        self.assertEqual(number_of_files, 29, 'Number of files in the result directory is not 29.')
 
         # check if some filenames match with expected names
         self.assertTrue(os.path.exists(os.path.join(result, 'LHC_page_1.pdf')))
