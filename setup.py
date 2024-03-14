@@ -25,6 +25,7 @@ setup(
           'pebble',
           'timeout-decorator',
           'attrdict',
+          'numpy',
       ],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
