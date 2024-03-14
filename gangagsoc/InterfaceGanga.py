@@ -135,8 +135,11 @@ using coding marker #1.\nLLM probably generated a different pattern of text.")
 
         python_snippet = self.extract_code_snippet(\
             'Pi approximation', pi_pattern_1, pi_pattern_2, llm_output)
+        # print(python_snippet)
+        
         ganga_snippet = self.extract_code_snippet(\
             'Ganga job', ganga_pattern_1, ganga_pattern_2, llm_output)
+        # print(ganga_snippet)
 
         if not ganga_snippet:
             print("ERROR: LLM failed to generate any code to run Ganga job.")
@@ -144,7 +147,7 @@ using coding marker #1.\nLLM probably generated a different pattern of text.")
         
         bash_snippet = self.extract_code_snippet(\
             'Bash', bash_pattern_1, bash_pattern_2, llm_output)
-        print(bash_snippet)
+        # print(bash_snippet)
 
         # all code snippets should be ready by this point. #
         
@@ -161,10 +164,13 @@ using coding marker #1.\nLLM probably generated a different pattern of text.")
         ganga_filename = "run_ganga_job.py"
         bash_filename = "run_ganga.sh"
 
-        # Write code snippets to respective files
-        self.helper_write_to_file(pi_filename, python_snippet)
-        self.helper_write_to_file(ganga_filename, ganga_snippet)
-        self.helper_write_to_file(bash_filename, bash_snippet)
+        # Write available code snippets to respective files
+        if python_snippet:
+            self.helper_write_to_file(pi_filename, python_snippet)
+        if ganga_snippet:
+            self.helper_write_to_file(ganga_filename, ganga_snippet)
+        if bash_snippet:
+            self.helper_write_to_file(bash_filename, bash_snippet)
 
         return True
 
