@@ -8,7 +8,7 @@ class TestGangaLLM(unittest.TestCase):
         from gangagsoc.run_InterfaceGanga import run_ganga_llm
 
         # Check if LLM was able to generate code
-        self.assertTrue(run_ganga_llm())
+        self.assertTrue(run_ganga_llm(), "LLM failed to generate code.")
 
         # set up file paths
         current_dir = os.getcwd()
@@ -25,7 +25,7 @@ class TestGangaLLM(unittest.TestCase):
             ganga = os.path.join(current_dir, parent_dir, ganga_job)
 
         # check if LLM generated ganga job script exists
-        self.assertTrue(os.path.exists(ganga))
+        self.assertTrue(os.path.exists(ganga), "Ganga job script does not exist.")
 
         # run the ganga job
         command = ["python3", ganga]
