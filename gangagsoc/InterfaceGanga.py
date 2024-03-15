@@ -30,7 +30,7 @@ Esimated runtime: less than 1 minute\n")
             model = model.cuda()
         else:
             print("\nNo CUDA compatible GPU found. Running on CPU only...\n\
-Esimated runtime: 13 to 25 minutes\n")
+Esimated runtime: 10 to 25 minutes\n")
 
         if not tokenizer.pad_token:
             tokenizer.pad_token = tokenizer.eos_token
