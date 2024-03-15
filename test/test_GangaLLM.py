@@ -32,8 +32,8 @@ class TestGangaLLM(unittest.TestCase):
 
         # run the ganga job
         command = ["python3", ganga]
-        result = subprocess.run(command)
-        self.assertIsNotNone(result.returncode, "FAIL: Subprocess execution returned with None")
+        result = subprocess.run(command, capture_output=True)
+        self.assertIsNotNone(result.returncode, "FAILED: Subprocess execution returned with None")
 
         try:
             os.remove(ganga)
