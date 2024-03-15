@@ -16,7 +16,6 @@ setup(
           'FPDF',
           'tqdm',
           'numpy',
-          'matplotlib',
           'torch>=2.0',
           'tokenizers>=0.14.0',
           'transformers>=4.35.0',
@@ -25,7 +24,6 @@ setup(
           'pebble',
           'timeout-decorator',
           'attrdict',
-          'numpy',
       ],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
