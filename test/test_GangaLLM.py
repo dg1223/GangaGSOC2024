@@ -15,7 +15,7 @@ class TestGangaLLM(unittest.TestCase):
         root_dir = os.path.dirname(current_dir)
         parent_dir = 'gangagsoc'
         ganga_job = "run_ganga_job.py"
-
+        bash_script = "run_ganga.sh"
 
          # for local runs
         ganga = os.path.join(root_dir, parent_dir, ganga_job)
@@ -34,3 +34,10 @@ class TestGangaLLM(unittest.TestCase):
         command = ["python3", ganga]
         result = subprocess.run(command)
         self.assertIsNotNone(result.returncode, "FAIL: Subprocess execution returned with None")
+
+        try:
+            os.remove(ganga)
+            os.remove(bash_script)
+        except:
+            print("Error removing scripts created by unit test.")
+            
