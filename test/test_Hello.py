@@ -21,6 +21,7 @@ class TestHello(unittest.TestCase):
         with open(stdout, 'r') as f:
             job_output = f.read().strip(' \n')
 
-        self.assertEqual(job_output, 'Hello World')
+        self.assertEqual(job_output, 'Hello World',\
+            "Output doesn't match expected 'Hello World'.")
 
         job.remove()
