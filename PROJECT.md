@@ -3,23 +3,23 @@
 
 This is a summary of what I have done to complete the challenge for GangaGSoC2024.
 
-All of my code and input files for this challenge is kept in the `gangagsoc` directory. All of the unit tests are kept in the `test` directory.
+My codes and input files for this challenge are kept in the `gangagsoc` directory. All unit tests are kept in the `test` directory.
 
 ## <ins>Preparation</ins>
 
-To prepare for the challenge, I contributed to the [Ganga](https://github.com/ganga-devs/ganga) project. While working on it, I was able to familiarize myself with ganga’s [documentation](https://ganga.readthedocs.io/en/latest/index.html) and source code. I was able to contribute to 2 issues, opened 3 new issues and made 4 pull requests.
+To prepare for the challenge, I contributed to [Ganga](https://github.com/ganga-devs/ganga). While working on it, I was able to familiarize myself with ganga’s [documentation](https://ganga.readthedocs.io/en/latest/index.html) and source code. I was able to contribute to 2 issues, opened 3 new issues and made 4 pull requests.
 
 After that, I set up the GangaGSoC2024 project on my local machine.
 
 ## <ins>Initial Task</ins>
 
-There are three subtasks in the initial task: hello world, split PDF and count word frequency in PDF. The first one is pretty straightforward. The script `initial_task.py` helps execute the second and third one.
-
-[Note: A [visual tree of the working directories](#appendix-a-directory-trees) may help you easily follow the different code dependencies mentioned below.]
+The initial task has three subtasks: hello world, split PDF and count word frequency in PDF. The first one is pretty straightforward. The script `initial_task.py` helps execute the second and third one.
 
 ### Hello World
 
-The script `hello.py` runs a default ‘Hello World’ job in Ganga on Local backend.
+The script `hello.py` runs a default ‘Hello World’ job in Ganga on `Local` backend.
+
+[Note: A [visual tree of the working directories](#appendix-a-directory-trees) may help you easily follow the different code dependencies mentioned below.]
 
 ### Split PDF
 (Go back to [Testing](#testing))
@@ -31,7 +31,7 @@ The script `hello.py` runs a default ‘Hello World’ job in Ganga on Local bac
 `split_pdf.py` → splits PDF file
 
 - The script `initial_task.py` creates a bash script called `run_initial_task.sh` and submits a ganga job that executes this script as an `Executable` application.
-- This wrapper script, when invoked by the ganga job ‘split_pdf’, calls the python script `split_pdf.py` that splits the PDF file into 29 separate PDFs to account for the 29 pages.
+- This wrapper script, when invoked by the ganga job ‘split_pdf’, calls the python script `split_pdf.py` that splits the PDF file `LHC.pdf` into 29 separate PDFs to account for the 29 pages.
 - These extracted files are stored in the folder `extracted_pages` inside the `gangagsoc` directory.
 
 ### Count Word Frequency
@@ -44,10 +44,10 @@ The script `hello.py` runs a default ‘Hello World’ job in Ganga on Local bac
 `count_it.py` → counts the number of occurences of the word ‘it’ in `LHC.pdf`
 
 - The same script `initial_task.py` submits a ganga job named ‘count_it’ that invokes the bash script `run_initial_task.sh`.
-- However, this time the job passes individual **page numbers** and the **target word ‘it’** as parameters to the bash script using `ArgSplitter`. As a result, `run_initial_task.sh` gets called 29 times to account for every page in LHC.pdf.
-- Each time `run_initial_task.sh` gets called, it invokes the python script `count_it.py` with a different page number as one of the arguments.
-- The script then counts the word frequency of ‘it’ in that page and prints it out. Ganga’s `ArgSplitter` saves the output to a file called `stdout`.
-- Then the job calls `TextMerger` to merge the 29 stdout files from the local job directory.
+- However, this time the job passes individual **page numbers** and the **target word ‘it’** as arguments to the bash script using `ArgSplitter`. As a result, `run_initial_task.sh` gets called 29 times to account for every page in `LHC.pdf`.
+- Each time `run_initial_task.sh` gets called, it invokes the Python script `count_it.py` with a different page number as one of the arguments.
+- The Python script then counts the word frequency of ‘it’ in that page and prints it out. Ganga’s `ArgSplitter` saves the output to a file called `stdout` in the user's local ganga workspace directory.
+- Then the job calls `TextMerger` to merge the 29 stdout files.
 - Finally, `count_it.py` parses the merged output by singling out the word counts, adds them up and stores the final count to a text file called `count_it.txt` in the `gangagsoc` directory.
 
 ### Testing
@@ -63,11 +63,11 @@ For this task, I chose the LLM [deepseek-coder-1.3b-instruct](https://github.com
 
 ### Preparation
 
-At first, I [studied the basics of Large Language Models](#additional-references) (LLM). I read about how they are trained, fine-tuned, sometimes optimized for performance ([quantized](https://towardsdatascience.com/which-quantization-method-is-right-for-you-gptq-vs-gguf-vs-awq-c4cd9d77d5be)) and what LLM hallucination means. I also crafted a **prompt** (see [Appendix B: Prompt](#appendix-b-prompt)) to feed the LLM by following the instructions given on the challenge page.
+At first, I [studied the basics of Large Language Models](#additional-references) (LLM). I read about how they are trained, fine-tuned, sometimes optimized for performance ([quantized](https://towardsdatascience.com/which-quantization-method-is-right-for-you-gptq-vs-gguf-vs-awq-c4cd9d77d5be)) and what LLM hallucination means. I also crafted a **prompt** (see [Appendix B: Prompt](#appendix-b-prompt)) to feed the LLM by following instructions given on the challenge page.
 
 ### Shortlist LLMs
 
-I used this [LLM search directory](https://llm.extractum.io/list/?benchmark=bc_lang_humaneval_python), which has details on about 30,000 LLMs, to make a list of LLMs that I would be able to test locally as well as on online notebook platforms Google Collab and Kaggle for free. These online platforms provide free GPU time that helped expedite testing time.
+I used the [Extractum LLM search directory](https://llm.extractum.io/list/?benchmark=bc_lang_humaneval_python), which has details on about 30,000 LLMs, to make a list of models that I would be able to test locally as well as on online notebook platforms Google Collab and Kaggle for free. These online platforms provide free GPU time that helped expedite testing time.
 
 After shortlisting, I retrieved the models from [Huggingface](https://huggingface.co/models) and created a test script to test their performance on the prompt.
 
@@ -75,11 +75,11 @@ After shortlisting, I retrieved the models from [Huggingface](https://huggingfac
 
 I tested 33 LLMs (see [Appendix C: List of LLMs tested](#appendix-c-list-of-llms-tested)).
 
-The best model was **deepseek-coder-1.3b-instruct**. It was consistently able to generate a perfect Python code snippet to approximate Pi using accept-reject simulation, generate another snippet to submit the Ganga job and also a wrapper bash script.
+Based on quality of output, the best model was **deepseek-coder-1.3b-instruct**. It was consistently able to generate a perfect Python code snippet to approximate Pi using accept-reject simulation, generate another snippet to submit the Ganga job and also a wrapper bash script.
 
-While testing the models, I was also able to fine tune my prompt. 
+While testing the models, I was also able to fine tune my prompt (Appendix B shows this version).
 
-There were some drawbacks and challenges.
+I faced some drawbacks and challenges while testing the model.
 
 - The LLM could not generate proper import statements for ganga.
 - It would not use the bash script that it wrote as an argument to the ganga job. Instead, it kept passing the Python script as the argument to `File` or started hallucinating.
@@ -87,7 +87,7 @@ There were some drawbacks and challenges.
 
 ### <ins>Complete the Challenge Task</ins>
 
-With the LLM selected and a working prompt crafted, I created two Python scripts, `InterfaceGanga.py` and `run_InterfaceGanga.py`, to programmatically generate output from the LLM and a test file `test_GangaLLM.py` that executes a unit test to examine if the proposed code by the LLM tries to execute the job in Ganga.
+With the LLM selected and a working prompt crafted, I created two Python scripts, `InterfaceGanga.py` and `run_InterfaceGanga.py`, to programmatically generate output from the LLM. I also created a test file `test_GangaLLM.py` that executes a unit test to examine if the proposed code by the LLM tries to execute the job in Ganga.
 
 - `InterfaceGanga.py`
     
@@ -104,7 +104,7 @@ With the LLM selected and a working prompt crafted, I created two Python scripts
     
 - `test_GangaLLM.py`
     
-    Executes `run_InterfaceGanga.py` and checks if the code generated by the LLM make an attempt to execute the proposed code in Ganga. This test file is kept in the `test` directory.
+    Executes `run_InterfaceGanga.py` and checks if the code generated by the LLM attempts to execute the proposed code in Ganga. This test file is kept in the `test` directory.
     
 
 ## Configuration
@@ -142,9 +142,8 @@ The `setup.py` file includes all the required packages to run and test my code.
     ```
     
 - Activate ganga
-  
-  [activate-ganga.webm](https://github.com/dg1223/GangaGSoC2024/assets/4992116/fd848073-ce95-4893-9e10-ffd667eee7b9)
 
+  [activate-ganga.webm](https://github.com/dg1223/GangaGSoC2024/assets/4992116/fd848073-ce95-4893-9e10-ffd667eee7b9)
     
     ```bash
     ./bin/ganga
@@ -360,7 +359,7 @@ If the LLM remains consistent with the type of answers it produced when I tested
 
 **Failure**
 
-The **test** **will fail** if the script `run_ganga_job.py` is not found. It means the LLM either provided the code snippets in a different manner than what it did during my testing or it hallucinated.
+The **test** **will fail** if the script `run_ganga_job.py` is not found. It means the LLM either provided the code snippets in a different style than what it did during my testing or it hallucinated.
 
 The **test** **will also fail** if it fails in its attempt to run the ganga job.
 
@@ -374,7 +373,7 @@ Depending on the system configuration. the test takes 8-25 minutes to finish on 
 
 [5.test.webm](https://github.com/dg1223/GangaGSoC2024/assets/4992116/89432c7f-b96b-4757-9dce-c875218f8d06)
 
-Assuming you are in the test directory of the project, all of the 18 unit tests can be run by executing:
+Assuming you are in the `test` directory of the project, all of the 18 unit tests can be run by executing:
 
 ```bash
 python -m pytest
@@ -448,7 +447,7 @@ https://github.com/jncraton/languagemodels
 └── test_trivial.py
 ```
 
-# Appendix B: Prompt
+# Appendix B: Final Prompt
 
 (Go back to [Preparation](#preparation-1))
 
