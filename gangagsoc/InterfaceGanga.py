@@ -17,6 +17,17 @@ class InterfaceGanga:
         self.token_length = token_length
 
     def run_llm_inference(self):
+        """
+        The run_llm_inference method takes in a string of text and 
+        returns the generated output from the LLM.
+        
+        :param from constructor:
+            llm_model: the LLM model to use
+            llm_input: prompt
+            return_tensor_format: format of the return tensor
+            token_length: maximum token length of the output
+        :return: The generated text
+        """
         tokenizer = AutoTokenizer.from_pretrained(self.llm_model,\
             trust_remote_code=True)
 
@@ -72,6 +83,22 @@ Esimated runtime: 10 to 25 minutes\n")
 
 
     def extract_code_snippet(self, pattern_type, pattern_1, pattern_2, llm_output):
+        """
+        The extract_code_snippet function is used to extract code snippets
+        from the LLM's output.
+        The function takes in a pattern_type, which is a string that describes
+        what type of code snippet is being extracted (e.g., 'Pi approximation',
+        'Ganga job', etc.). The function also takes in two patterns, which are
+        regular expressions that describe how the code snippet should be parsed
+        from the LLM's output. The first pattern will be tried first; if it fails
+        to parse any text, then the second pattern will be tried instead.
+        
+        :param pattern_type: detect code for pi estimation or ganga job or bash
+        :param pattern_1: the first pattern of text that llm wraps the code with
+        :param pattern_2: the second pattern of text that llm wraps the code with
+        :param llm_output: raw output from the LLM given the prompt
+        :return: A snippet of code that requires futher processing
+        """
         total_tries_left = 2
         while total_tries_left > 0:
             if total_tries_left == 2:
@@ -100,6 +127,14 @@ using coding marker #1.\nLLM probably generated a different pattern of text.")
             return snippet
 
     def helper_extract_code_snippet(self, snippets):
+        """
+        The helper_extract_code_snippet function takes in a list of code snippets
+        and returns the first snippet. The LLM usually generates many blank lines
+        after generating code which get extracted separately and need to be ignored
+        
+        :param snippets: LLM's output after first phase of processing
+        :return: The first element of the snippets list
+        """
         snippet_size = np.shape(snippets)
         dimensions = len(snippet_size)
         # no dimension
@@ -125,6 +160,8 @@ using coding marker #1.\nLLM probably generated a different pattern of text.")
         These hardcoded patterns were developer after doing multiple simulation runs
         with the same prompt on the deepseeker model. However, the LLM's consistency
         cannot be guaranteed.
+        
+        :param llm_output: processed output from LLM
         '''
         pi_pattern_1 = r'python code snippet #1:(.*?)((?=\npython code snippet #2)|$)'
         ganga_pattern_1 = r'python code snippet #2:(.*?)((?=\nbash code snippet)|$)'

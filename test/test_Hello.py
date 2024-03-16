@@ -8,9 +8,11 @@ wrapper_script = 'run_initial_task.sh'
 hello_script = 'hello.py'
 
 
-class TestHello(unittest.TestCase):
-    # Mimics a complete system call to hello.py
+class TestHello(unittest.TestCase):    
     def testExecuteScript(self):
+        '''
+        Mimics a complete system call to hello.py
+        '''
         from gangagsoc.hello import execute_script
 
         job = execute_script()
