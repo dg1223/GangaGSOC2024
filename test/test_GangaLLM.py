@@ -35,8 +35,9 @@ class TestGangaLLM(unittest.TestCase):
         result = subprocess.run(command, capture_output=True)
         self.assertIsNotNone(result.returncode, "FAILED: Subprocess execution returned with None")
 
-        try:
-            os.remove(ganga)
-            os.remove(bash_script)
-        except:
-            print("Error removing scripts created by unit test.")
+        ## Don't remove generated scripts during challenge assesment phase
+        # try:
+        #     os.remove(ganga)
+        #     os.remove(bash_script)
+        # except:
+        #     print("Error removing scripts created by unit test.")
