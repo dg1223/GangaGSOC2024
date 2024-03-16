@@ -142,6 +142,9 @@ The `setup.py` file includes all the required packages to run and test my code.
     ```
     
 - Activate ganga
+  
+  [activate-ganga.webm](https://github.com/dg1223/GangaGSoC2024/assets/4992116/fd848073-ce95-4893-9e10-ffd667eee7b9)
+
     
     ```bash
     ./bin/ganga
