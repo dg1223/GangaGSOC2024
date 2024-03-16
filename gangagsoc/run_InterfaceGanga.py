@@ -22,7 +22,7 @@ def run_ganga_llm():
     Do not give me code as IPython or Jupyter prompts. Give me the python script."
 
     llm = InterfaceGanga(llm_input=prompt)
-    output = llm.run_llm()
+    output = llm.run_llm_inference()
 
     # Write code snippets to file and return a bool indicatory
     received_code_from_llm = llm.write_code_snippet_to_file(output)
