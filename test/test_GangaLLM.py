@@ -15,7 +15,7 @@ class TestGangaLLM(unittest.TestCase):
         root_dir = os.path.dirname(current_dir)
         parent_dir = 'gangagsoc'
         ganga_job = "run_ganga_job.py"
-        bash_script = "run_ganga.sh"
+        # bash_script = "run_ganga.sh"
 
         ### Find path for ganga job script
         # for local runs
