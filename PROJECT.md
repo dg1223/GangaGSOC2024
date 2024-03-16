@@ -62,7 +62,7 @@ For this task, I chose the LLM [deepseek-coder-1.3b-instruct](https://github.com
 
 ### Preparation
 
-At first, I [studied the basics of Large Language Models](#additional-references) (LLM). I read about how they are trained, fine-tuned, sometimes optimized for performance ([quantized](https://towardsdatascience.com/which-quantization-method-is-right-for-you-gptq-vs-gguf-vs-awq-c4cd9d77d5be)) and what LLM hallucination means. I also crafted a **prompt** (see [Appendix B: Prompt](#appendix-b:-prompt)) to feed the LLM by following the instructions given on the challenge page.
+At first, I [studied the basics of Large Language Models](#additional-references) (LLM). I read about how they are trained, fine-tuned, sometimes optimized for performance ([quantized](https://towardsdatascience.com/which-quantization-method-is-right-for-you-gptq-vs-gguf-vs-awq-c4cd9d77d5be)) and what LLM hallucination means. I also crafted a **prompt** (see [Appendix B: Prompt](#appendix-b-prompt)) to feed the LLM by following the instructions given on the challenge page.
 
 ### Shortlist LLMs
 
