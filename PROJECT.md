@@ -87,7 +87,7 @@ I faced some drawbacks and challenges while testing the model.
 
 ### <ins>Complete the Challenge Task</ins>
 
-With the LLM selected and a working prompt crafted, I created two Python scripts, `InterfaceGanga.py` and `run_InterfaceGanga.py`, to programmatically generate output from the LLM and a test file `test_GangaLLM.py` that executes a unit test to examine if the proposed code by the LLM tries to execute the job in Ganga.
+With the LLM selected and a working prompt crafted, I created two Python scripts, `InterfaceGanga.py` and `run_InterfaceGanga.py`, to programmatically generate output from the LLM. I also created a test file `test_GangaLLM.py` that executes a unit test to examine if the proposed code by the LLM tries to execute the job in Ganga.
 
 - `InterfaceGanga.py`
     
