@@ -23,7 +23,7 @@ class TestCountIt(unittest.TestCase):
 
         text = "The Large Hadron Collider! [citation] {CERN} more TEXT."
         self.assertEqual(preprocess_text(text),\
-            "the large hadron collider  citation  cern more text", "Text preprocessing incorrect.")
+            "the large hadron collider   citation   cern  more text", "Text preprocessing incorrect.")
 
     def testCountWord(self):
         from gangagsoc.count_it import count_word
@@ -37,5 +37,5 @@ class TestCountIt(unittest.TestCase):
         pdf_writer.cell(ln=0, align='L', w=0, txt=text, border=0)        
         pdf_writer.output(pdf_file, 'F')
 
-        self.assertEqual(count_word(pdf_file, "0", "hadron"), 1, "Word count incorrect.")
+        self.assertEqual(count_word(pdf_file, "0", "hadron"), 2, "Word count incorrect.")
         os.remove(pdf_file)

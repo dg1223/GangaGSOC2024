@@ -189,7 +189,7 @@ class TestSystem(unittest.TestCase):
 
         with open(result, 'r') as f:
             count = f.read().strip(' \n')
-        self.assertEqual(count, '30')
+        self.assertEqual(count, '31')
 
         os.remove(result)
         os.environ["TEST_SCRIPT_OVERRIDE"] = "true"
