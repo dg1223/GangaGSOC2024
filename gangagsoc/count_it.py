@@ -28,7 +28,7 @@ def preprocess_text(text):
 
     # replace brackets first, then the rest
     clean_text = re.sub(square_brackets, ' ', text.lower())    
-    clean_text = re.sub(non_alpha_numeric, '', clean_text)
+    clean_text = re.sub(non_alpha_numeric, ' ', clean_text)
 
     return clean_text
 
