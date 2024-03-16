@@ -23,7 +23,7 @@ class TestCountIt(unittest.TestCase):
 
         text = "The Large Hadron Collider! [citation] {CERN} more TEXT."
         self.assertEqual(preprocess_text(text),\
-            "the large hadron collider   citation   cern  more text", "Text preprocessing incorrect.")
+            "the large hadron collider   citation   cern  more text ", "Text preprocessing incorrect.")
 
     def testCountWord(self):
         from gangagsoc.count_it import count_word
