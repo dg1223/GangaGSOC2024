@@ -23,6 +23,7 @@ def run_ganga_llm():
 
     llm = InterfaceGanga(llm_input=prompt)
     output = llm.run_llm_inference()
+    print(output)
 
     # Write code snippets to file and return a bool indicatory
     received_code_from_llm = llm.write_code_snippet_to_file(output)
