@@ -131,11 +131,11 @@ The `setup.py` file includes all the required packages to run and test my code.
     . bin/activate
     ```
     
-- Install dependencies
+- Install dependencies (note the double dots in the second command - we need to be in the project's root directory to install additional packages)
     
     ```bash
     python -m pip install --upgrade pip wheel setuptools
-    python -m pip install .
+    python -m pip install ..
     ```
     
 - Activate ganga
