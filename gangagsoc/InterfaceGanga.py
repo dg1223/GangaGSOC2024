@@ -16,7 +16,7 @@ class InterfaceGanga:
         self.return_tensor_format = return_tensor_format
         self.token_length = token_length
 
-    def run_llm(self):
+    def run_llm_inference(self):
         tokenizer = AutoTokenizer.from_pretrained(self.llm_model,\
             trust_remote_code=True)
 
