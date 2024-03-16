@@ -1,4 +1,4 @@
-# What I have done
+# What I Have Done
 
 This is a summary of what I have done to complete the challenge for GangaGSoC2024.
 
@@ -10,17 +10,18 @@ To prepare for the challenge, I contributed to the [Ganga](https://github.com/ga
 
 After that, I set up the GangaGSoC2024 project on my local machine.
 
-## <ins>Initial task</ins>
+## <ins>Initial Task</ins>
 
 There are three subtasks in the initial task: hello world, split PDF and count word frequency in PDF. The first one is pretty straightforward. The script `initial_task.py` helps execute the second and third one.
 
-[Note: A [visual tree of the working directories](#appendix-a:-directory-trees) may help you easily follow the different code dependencies mentioned below.]
+[Note: A [visual tree of the working directories](#appendix-a-directory-trees) may help you easily follow the different code dependencies mentioned below.]
 
 ### Hello World
 
 The script `hello.py` runs a default ‘Hello World’ job in Ganga on Local backend.
 
 ### Split PDF
+(Go back to [Testing](#testing))
 
 `initial_task.py` → task execution script (submits ganga job)
 
@@ -32,7 +33,8 @@ The script `hello.py` runs a default ‘Hello World’ job in Ganga on Local bac
 - This wrapper script, when invoked by the ganga job ‘split_pdf’, calls the python script `split_pdf.py` that splits the PDF file into 29 separate PDFs to account for the 29 pages.
 - These extracted files are stored in the folder `extracted_pages` inside the `gangagsoc` directory.
 
-### Count word frequency
+### Count Word Frequency
+(Go back to [Testing](#testing))
 
 `initial_task.py` → task execution script (submits ganga job)
 
@@ -60,7 +62,7 @@ For this task, I chose the LLM [deepseek-coder-1.3b-instruct](https://github.com
 
 ### Preparation
 
-At first, I [studied about Large Language Models](#references) (LLM). I read about how they are trained, fine-tuned, sometimes optimized for performance ([quantized](https://towardsdatascience.com/which-quantization-method-is-right-for-you-gptq-vs-gguf-vs-awq-c4cd9d77d5be)) and what LLM hallucination means. I also crafted a **prompt** (see [Appendix B: Prompt](#appendix-b:-prompt)) to feed the LLM by following the instructions given on the challenge page.
+At first, I [studied the basics of Large Language Models](#references) (LLM). I read about how they are trained, fine-tuned, sometimes optimized for performance ([quantized](https://towardsdatascience.com/which-quantization-method-is-right-for-you-gptq-vs-gguf-vs-awq-c4cd9d77d5be)) and what LLM hallucination means. I also crafted a **prompt** (see [Appendix B: Prompt](#appendix-b:-prompt)) to feed the LLM by following the instructions given on the challenge page.
 
 ### Shortlist LLMs
 
@@ -68,9 +70,9 @@ I used this [LLM search directory](https://llm.extractum.io/list/?benchmark=bc_l
 
 After shortlisting, I retrieved the models from [Huggingface](https://huggingface.co/models) and created a test script to test their performance on the prompt.
 
-### Choose the best model
+### Choose the Best Model
 
-I tested 33 LLMs (see [Appendix C: List of LLMs tested](#appendix-c:-list-of-llms-tested)).
+I tested 33 LLMs (see [Appendix C: List of LLMs tested](#appendix-c-list-of-llms-tested)).
 
 The best model was **deepseek-coder-1.3b-instruct**. It was consistently able to generate a perfect Python code snippet to approximate Pi using accept-reject simulation, generate another snippet to submit the Ganga job and also a wrapper bash script.
 
@@ -82,7 +84,7 @@ There were some drawbacks and challenges.
 - It would not use the bash script that it wrote as an argument to the ganga job. Instead, it kept passing the Python script as the argument to `File` or started hallucinating.
 - It used different types of markers to delineate the different code snippets. This issue made parsing its output to extract only the codes somewhat challenging.
 
-### <ins>Complete the challenge task</ins>
+### <ins>Complete the Challenge Task</ins>
 
 With the LLM selected and a working prompt crafted, I created two Python scripts, `InterfaceGanga.py` and `run_InterfaceGanga.py`, to programmatically generate output from the LLM and a test file `test_GangaLLM.py` that executes a unit test to examine if the proposed code by the LLM tries to execute the job in Ganga.
 
@@ -110,9 +112,9 @@ The `setup.py` file includes all the required packages to run and test my code.
 
 ---
 
-# How to test
+# How to Test
 
-## Set up project
+## Setup Project
 
 - Clone repository and enter it
     
@@ -143,7 +145,7 @@ The `setup.py` file includes all the required packages to run and test my code.
     ```
     
 
-## ‘**Ganga initial task**’
+## ‘**Ganga Initial Task**’
 
 You can run all three subtasks in the ganga prompt.
 
@@ -301,7 +303,7 @@ quit
 
 You should now be in the `GSoC` directory.
 
-**Edge cases to consider**
+**Edge Cases to Consider**
 
 There were 2 edge cases that I needed to address to get the correct word count. I used the most popular PDF processing library `pypdf` to extract text from `LHC.pdf`. Upon examining the extracted text, I found the following edge cases:
 
@@ -334,7 +336,7 @@ python -m pytest test_GangaLLM.py
 
 If it passes, it means the test tried to execute the code in ganga that was proposed by the LLM.
 
-### Test success or failure criteria
+### Test Success or Failure Criteria
 
 The test actually calls the function `run_ganga_llm()` from `run_InterfaceGanga.py`.
 
@@ -352,13 +354,13 @@ The **test** **will fail** if the script `run_ganga_job.py` is not found. It mea
 
 The **test** **will also fail** if it fails in its attempt to run the ganga job.
 
-### **System requirements**
+### **System Requirements**
 
 Depending on the system configuration. the test takes 8-25 minutes to finish on a CPU (at least Intel Core i5 3rd generation) or less than a minute on a CUDA compatible GPU such as the NVIDIA Tesla P100. Minimum memory requirements are 16GB RAM and 8GB vRAM (if run on GPU).
 
-## Running unit tests
+## Running Unit Tests
 
-(Go back to [‘Interfacing Ganga’](#interfacing-ganga))
+(Go back to [‘Interfacing Ganga’](#interfacing-ganga-1))
 
 Assuming you are in the test directory of the project, all of the 18 unit tests can be run by executing:
 
@@ -378,7 +380,8 @@ test_SplitPDF.py
 test_trivial.py
 ```
 
-# References
+# Additional References
+(Go back to [Preparation](#preparation))
 
 https://github.com/jncraton/languagemodels
 
@@ -435,7 +438,7 @@ https://github.com/jncraton/languagemodels
 
 # Appendix B: Prompt
 
-(Go back to [Preparation](#preparation))
+(Go back to [Preparation](#preparation-1))
 
 I want to use Ganga to calculate an approximation to the number pi using an accept-reject simulation method with one million simulations. I would like to perform this calculation through a Ganga job. The job should be split into a number of subjobs that each do thousand simulations.The code should be written in Python. 
 
