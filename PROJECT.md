@@ -3,23 +3,23 @@
 
 This is a summary of what I have done to complete the challenge for GangaGSoC2024.
 
-All of my code and input files for this challenge is kept in the `gangagsoc` directory. All of the unit tests are kept in the `test` directory.
+My codes and input files for this challenge are kept in the `gangagsoc` directory. All unit tests are kept in the `test` directory.
 
 ## <ins>Preparation</ins>
 
-To prepare for the challenge, I contributed to the [Ganga](https://github.com/ganga-devs/ganga) project. While working on it, I was able to familiarize myself with ganga’s [documentation](https://ganga.readthedocs.io/en/latest/index.html) and source code. I was able to contribute to 2 issues, opened 3 new issues and made 4 pull requests.
+To prepare for the challenge, I contributed to [Ganga](https://github.com/ganga-devs/ganga). While working on it, I was able to familiarize myself with ganga’s [documentation](https://ganga.readthedocs.io/en/latest/index.html) and source code. I was able to contribute to 2 issues, opened 3 new issues and made 4 pull requests.
 
 After that, I set up the GangaGSoC2024 project on my local machine.
 
 ## <ins>Initial Task</ins>
 
-There are three subtasks in the initial task: hello world, split PDF and count word frequency in PDF. The first one is pretty straightforward. The script `initial_task.py` helps execute the second and third one.
-
-[Note: A [visual tree of the working directories](#appendix-a-directory-trees) may help you easily follow the different code dependencies mentioned below.]
+The initial task has three subtasks: hello world, split PDF and count word frequency in PDF. The first one is pretty straightforward. The script `initial_task.py` helps execute the second and third one.
 
 ### Hello World
 
-The script `hello.py` runs a default ‘Hello World’ job in Ganga on Local backend.
+The script `hello.py` runs a default ‘Hello World’ job in Ganga on `Local` backend.
+
+[Note: A [visual tree of the working directories](#appendix-a-directory-trees) may help you easily follow the different code dependencies mentioned below.]
 
 ### Split PDF
 (Go back to [Testing](#testing))
@@ -31,7 +31,7 @@ The script `hello.py` runs a default ‘Hello World’ job in Ganga on Local bac
 `split_pdf.py` → splits PDF file
 
 - The script `initial_task.py` creates a bash script called `run_initial_task.sh` and submits a ganga job that executes this script as an `Executable` application.
-- This wrapper script, when invoked by the ganga job ‘split_pdf’, calls the python script `split_pdf.py` that splits the PDF file into 29 separate PDFs to account for the 29 pages.
+- This wrapper script, when invoked by the ganga job ‘split_pdf’, calls the python script `split_pdf.py` that splits the PDF file `LHC.pdf` into 29 separate PDFs to account for the 29 pages.
 - These extracted files are stored in the folder `extracted_pages` inside the `gangagsoc` directory.
 
 ### Count Word Frequency
