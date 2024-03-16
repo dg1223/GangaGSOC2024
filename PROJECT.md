@@ -44,10 +44,10 @@ The script `hello.py` runs a default ‘Hello World’ job in Ganga on `Local` b
 `count_it.py` → counts the number of occurences of the word ‘it’ in `LHC.pdf`
 
 - The same script `initial_task.py` submits a ganga job named ‘count_it’ that invokes the bash script `run_initial_task.sh`.
-- However, this time the job passes individual **page numbers** and the **target word ‘it’** as arguments to the bash script using `ArgSplitter`. As a result, `run_initial_task.sh` gets called 29 times to account for every page in LHC.pdf.
-- Each time `run_initial_task.sh` gets called, it invokes the python script `count_it.py` with a different page number as one of the arguments.
-- The script then counts the word frequency of ‘it’ in that page and prints it out. Ganga’s `ArgSplitter` saves the output to a file called `stdout`.
-- Then the job calls `TextMerger` to merge the 29 stdout files from the local job directory.
+- However, this time the job passes individual **page numbers** and the **target word ‘it’** as arguments to the bash script using `ArgSplitter`. As a result, `run_initial_task.sh` gets called 29 times to account for every page in `LHC.pdf`.
+- Each time `run_initial_task.sh` gets called, it invokes the Python script `count_it.py` with a different page number as one of the arguments.
+- The Python script then counts the word frequency of ‘it’ in that page and prints it out. Ganga’s `ArgSplitter` saves the output to a file called `stdout` in the user's local ganga workspace directory.
+- Then the job calls `TextMerger` to merge the 29 stdout files.
 - Finally, `count_it.py` parses the merged output by singling out the word counts, adds them up and stores the final count to a text file called `count_it.txt` in the `gangagsoc` directory.
 
 ### Testing
