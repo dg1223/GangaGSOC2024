@@ -1,6 +1,13 @@
 from gangagsoc.InterfaceGanga import InterfaceGanga
 
 def run_ganga_llm():
+    """
+    The run_ganga_llm function runs inference on the LLM using a prmopt.
+    It returns a boolean indicating whether or not the output generated
+    by the LLM contain any meaningful code.
+    
+    :return: True if it receives a meaningful code snippet from llm
+    """
     prompt = "I want to use Ganga to calculate an approximation to the number \
     pi using an accept-reject simulation method with one million simulations. I \
     would like to perform this calculation through a Ganga job. The job should be \
