@@ -63,11 +63,11 @@ For this task, I chose the LLM [deepseek-coder-1.3b-instruct](https://github.com
 
 ### Preparation
 
-At first, I [studied the basics of Large Language Models](#additional-references) (LLM). I read about how they are trained, fine-tuned, sometimes optimized for performance ([quantized](https://towardsdatascience.com/which-quantization-method-is-right-for-you-gptq-vs-gguf-vs-awq-c4cd9d77d5be)) and what LLM hallucination means. I also crafted a **prompt** (see [Appendix B: Prompt](#appendix-b-prompt)) to feed the LLM by following the instructions given on the challenge page.
+At first, I [studied the basics of Large Language Models](#additional-references) (LLM). I read about how they are trained, fine-tuned, sometimes optimized for performance ([quantized](https://towardsdatascience.com/which-quantization-method-is-right-for-you-gptq-vs-gguf-vs-awq-c4cd9d77d5be)) and what LLM hallucination means. I also crafted a **prompt** (see [Appendix B: Prompt](#appendix-b-prompt)) to feed the LLM by following instructions given on the challenge page.
 
 ### Shortlist LLMs
 
-I used this [LLM search directory](https://llm.extractum.io/list/?benchmark=bc_lang_humaneval_python), which has details on about 30,000 LLMs, to make a list of LLMs that I would be able to test locally as well as on online notebook platforms Google Collab and Kaggle for free. These online platforms provide free GPU time that helped expedite testing time.
+I used the [Extractum LLM search directory](https://llm.extractum.io/list/?benchmark=bc_lang_humaneval_python), which has details on about 30,000 LLMs, to make a list of models that I would be able to test locally as well as on online notebook platforms Google Collab and Kaggle for free. These online platforms provide free GPU time that helped expedite testing time.
 
 After shortlisting, I retrieved the models from [Huggingface](https://huggingface.co/models) and created a test script to test their performance on the prompt.
 
@@ -75,7 +75,7 @@ After shortlisting, I retrieved the models from [Huggingface](https://huggingfac
 
 I tested 33 LLMs (see [Appendix C: List of LLMs tested](#appendix-c-list-of-llms-tested)).
 
-The best model was **deepseek-coder-1.3b-instruct**. It was consistently able to generate a perfect Python code snippet to approximate Pi using accept-reject simulation, generate another snippet to submit the Ganga job and also a wrapper bash script.
+Based on quality of output, the best model was **deepseek-coder-1.3b-instruct**. It was consistently able to generate a perfect Python code snippet to approximate Pi using accept-reject simulation, generate another snippet to submit the Ganga job and also a wrapper bash script.
 
 While testing the models, I was also able to fine tune my prompt. 
 
