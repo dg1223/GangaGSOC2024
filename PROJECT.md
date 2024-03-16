@@ -116,10 +116,10 @@ The `setup.py` file includes all the required packages to run and test my code.
 
 ## Setup Project
 
-- Clone repository and enter it
+- In the Linux terminal in your favourite directory, clone this repository by replacing `[PAT]` in the command below with your GitHub PAT ([Personal Access Token](https://docs.github.com/en/enterprise-server@3.9/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)) and enter the `GangaGSoC2024` project directory.
     
     ```bash
-    git clone https://github.com/dg1223/GangaGSoC2024.git
+    git clone https://[PAT]@github.com/dg1223/GangaGSoC2024.git
     cd GangaGSoC2024
     ```
     
