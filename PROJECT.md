@@ -77,9 +77,9 @@ I tested 33 LLMs (see [Appendix C: List of LLMs tested](#appendix-c-list-of-llms
 
 Based on quality of output, the best model was **deepseek-coder-1.3b-instruct**. It was consistently able to generate a perfect Python code snippet to approximate Pi using accept-reject simulation, generate another snippet to submit the Ganga job and also a wrapper bash script.
 
-While testing the models, I was also able to fine tune my prompt. 
+While testing the models, I was also able to fine tune my prompt (Appendix B shows this version).
 
-There were some drawbacks and challenges.
+I faced some drawbacks and challenges while testing the model.
 
 - The LLM could not generate proper import statements for ganga.
 - It would not use the bash script that it wrote as an argument to the ganga job. Instead, it kept passing the Python script as the argument to `File` or started hallucinating.
@@ -435,7 +435,7 @@ https://github.com/jncraton/languagemodels
 └── test_trivial.py
 ```
 
-# Appendix B: Prompt
+# Appendix B: Final Prompt
 
 (Go back to [Preparation](#preparation-1))
 
