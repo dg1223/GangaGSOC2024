@@ -227,7 +227,7 @@ Press `q` to get back to ganga prompt.
 
 **Check output**
 
-In the gangagsoc directory, you should see a new folder called extracted_pages. In this folder, there should be 29 PDF files. Page 1 of `LHC.pdf` has been extracted as `LHC_page_1.pdf`, page 2 as  `LHC_page_2.pdf` and so on up to `LHC_page_29.pdf`.
+In the `gangagsoc` directory, you should see a new folder called `extracted_pages`. In this folder, there should be 29 PDF files. Page 1 of `LHC.pdf` has been extracted as `LHC_page_1.pdf`, page 2 as  `LHC_page_2.pdf` and so on up to `LHC_page_29.pdf`.
 
 ### Subtask 3
 
@@ -264,9 +264,9 @@ Run this command to check the output from TextMerger: jobs(746).peek('stdout')
 
 **Check output**
 
-As the second line suggests, the job should have created a text file called `count_it.txt` in the `gangagsoc` directory. Click on this file to check the word count. It should read `31`.
+As the second line in the output suggests, the job should have created a text file called `count_it.txt` in the `gangagsoc` directory. Open this file to check the word count. It should read `31`.
 
-Alternatively, you can check the content of this file by running the command shown by the third line of the job’s stdout shown above.
+Alternatively, you can check the content of this file by running the command shown by the third line of the job’s stdout:
 
 ```
 cat /path_to_this_git_repo/GangaGSoC2024/gangagsoc/count_it.txt
@@ -274,7 +274,7 @@ cat /path_to_this_git_repo/GangaGSoC2024/gangagsoc/count_it.txt
 
 You should see `31` in the ganga prompt.
 
-Let’s say the `job_id` is `102`. Running the command shown in the output should show you the `stdout` of the job:
+Let’s say the `job_id` is `102`. Running the command shown in the last line of the output should display the `stdout` from the job:
 
 ```python
 jobs(101).peek('stdout')
@@ -293,17 +293,15 @@ You should see the merged output from Ganga TextMergeTool.
 
 Press `q` to get back to ganga prompt.
 
-This is all there is to checking if the ‘initial task’ was successfully done. How to execute the unit tests are shown in the last section below.
+This is all there is to checking if the ‘initial task’ was successfully executed. How to execute the unit tests is shown in [the last section](#running-unit-tests) below.
 
-Quit ganga and get back to the root directory:
+Quit ganga and get back to the `GSoC` directory:
 
 ```python
 quit
 ```
 
-You should now be in the `GSoC` directory.
-
-**Edge Cases to Consider**
+**Edge Cases to Consider in Counting Word Frequency**
 
 There were 2 edge cases that I needed to address to get the correct word count. I used the most popular PDF processing library `pypdf` to extract text from `LHC.pdf`. Upon examining the extracted text, I found the following edge cases:
 
@@ -320,7 +318,7 @@ There were 2 edge cases that I needed to address to get the correct word count. 
 
 The most straightforward way to test this task is to run the corresponding unit test. If it passes, then the task is complete.
 
-However, this test takes time to complete if it is run on a CPU. In this case, I suggest running all of the tests together (see [Running unit tests](#running-unit-tests)) which includes this test too. The test first executes the run script `run_InterfaceGanga.py` that automatically detects if the system has a CUDA compatible GPU or not.
+However, this test takes time to complete if it is run on a CPU. In this case, I suggest running all the tests together (see [Running unit tests](#running-unit-tests)) to save time. The test first executes the run script `run_InterfaceGanga.py` that automatically detects if the system has a CUDA compatible GPU or not.
 
 If you want to run this unit test spefically from `test_GangaLLM.py`, go to the `test` directory (assuming you are in `GSoC`):
 
@@ -360,7 +358,7 @@ Depending on the system configuration. the test takes 8-25 minutes to finish on 
 
 ## Running Unit Tests
 
-(Go back to [‘Interfacing Ganga’](#interfacing-ganga-1))
+(Go back to [Subtask 3](#subtask-3) or [‘Interfacing Ganga’](#interfacing-ganga-1))
 
 Assuming you are in the test directory of the project, all of the 18 unit tests can be run by executing:
 
