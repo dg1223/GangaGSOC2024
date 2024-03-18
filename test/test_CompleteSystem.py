@@ -4,6 +4,12 @@ import shutil
 import subprocess
 from ganga.GangaTest.Framework.utils import sleep_until_completed
 
+'''
+TODO
+USE THE @patch DECORATOR IN THE UNIT TEST TO MOCK CALLS
+so that you don't end up importing modules when you test
+https://docs.python.org/3/library/unittest.mock.html#where-to-patch
+'''
 os.environ["FROM_TEST_SCRIPT"] = "true"
 
 wrapper_script = 'run_initial_task.sh'

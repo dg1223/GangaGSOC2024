@@ -238,6 +238,12 @@ else:
 # TEST_SCRIPT_OVERRIDE helps mimic an entire system call from test scripts
 if RUN_INITIAL_TASK:
     execute_initial_task()
+'''
+TODO
+USE THE @patch DECORATOR IN THE UNIT TEST TO MOCK CALLS
+so that you don't end up importing modules when you test
+https://docs.python.org/3/library/unittest.mock.html#where-to-patch
+'''
 elif os.getenv("TEST_SCRIPT_OVERRIDE") == "true":
     from ganga.ganga import ganga
     from ganga import Job, Local, Executable, File, ArgSplitter, TextMerger
