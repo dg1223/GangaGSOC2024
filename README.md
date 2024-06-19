@@ -1,4 +1,4 @@
-[![CI](https://github.com/dg1223/GangaGSoC2024/actions/workflows/testing.yml/badge.svg)](https://github.com/dg1223/GangaGSoC2024/actions/workflows/testing.yml)
+[![CI](https://github.com/dg1223/code-generating-LLM-CERN/actions/workflows/testing.yml/badge.svg)](https://github.com/dg1223/code-generating-LLM-CERN/actions/workflows/testing.yml)
 
 # Description
 **(Jump directly to [How to Test](#how-to-test))**
