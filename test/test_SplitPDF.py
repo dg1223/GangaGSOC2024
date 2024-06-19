@@ -19,7 +19,7 @@ class TestSplitPDF(unittest.TestCase):
         run_initial_task.sh from initial task, and then checking if the
         arguments are retrieved correctly.
         """
-        from gangagsoc.split_pdf import get_current_directory
+        from ganga.split_pdf import get_current_directory
 
         # simulate call to split_pdf.py through run_intial_task.sh from initial_task.py
         sys.argv = ["split_pdf.py", "current_dir", "pdf_file"]
@@ -52,7 +52,7 @@ class TestSplitPDF(unittest.TestCase):
         the split_pdf function on this dummy PDF file and checks that
         the extracted pages are present in the extracted_pages directory.
         """
-        from gangagsoc.split_pdf import split_pdf
+        from ganga.split_pdf import split_pdf
 
         # create a dummy PDF file to test
         pdf_file = self.create_pdf_with_numbers()

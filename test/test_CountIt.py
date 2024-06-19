@@ -16,7 +16,7 @@ class TestCountIt(unittest.TestCase):
         function in count_it.py by passing it a list of arguments
         and comparing the output to what is expected.
         """
-        from gangagsoc.count_it import get_arguments
+        from ganga.count_it import get_arguments
 
         sys.argv = ["count_it.py", "current_dir", "page_num", "word", "pdf_file"]
         self.assertEqual(get_arguments(),\
@@ -29,7 +29,7 @@ class TestCountIt(unittest.TestCase):
         function in count_it.py by comparing the output of preprocess_text
         to a string that is expected to be returned.
         """
-        from gangagsoc.count_it import preprocess_text
+        from ganga.count_it import preprocess_text
 
         text = "The Large Hadron Collider! [citation] {CERN} more TEXT."
         self.assertEqual(preprocess_text(text),\
@@ -43,7 +43,7 @@ class TestCountIt(unittest.TestCase):
         to check if it can correctly find how many times a word appears
         on that page. The test passes if the number of occurrences is correct.
         """
-        from gangagsoc.count_it import count_word
+        from ganga.count_it import count_word
 
         pdf_file = 'test_pdf.pdf'
         pdf_writer = FPDF()

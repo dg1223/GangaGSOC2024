@@ -9,7 +9,7 @@ class TestGangaLLM(unittest.TestCase):
         to approximate pi, check if code contains a ganga job
         snippet and if so, submit the ganga job
         ''' 
-        from gangagsoc.run_InterfaceGanga import run_ganga_llm
+        from ganga.run_InterfaceGanga import run_ganga_llm
 
         # Check if LLM was able to generate code
         self.assertTrue(run_ganga_llm(), "LLM failed to generate code.")
@@ -17,7 +17,7 @@ class TestGangaLLM(unittest.TestCase):
         # set up file paths
         current_dir = os.getcwd()
         root_dir = os.path.dirname(current_dir)
-        parent_dir = 'gangagsoc'
+        parent_dir = 'ganga'
         ganga_job = "run_ganga_job.py"
         # bash_script = "run_ganga.sh"
 

@@ -13,7 +13,7 @@ class TestHello(unittest.TestCase):
         '''
         Mimics a complete system call to hello.py
         '''
-        from gangagsoc.hello import execute_script
+        from ganga.hello import execute_script
 
         job = execute_script()
         stdout = os.path.join(job.outputdir, 'stdout')

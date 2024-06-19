@@ -21,15 +21,15 @@ def set_current_dir(cur_dir):
     and when running on CI, we are in a GangaGSoC2024 folder.
     The function takes as input the current directory and returns it
     after setting it to be either:
-        - The parent_dir (gangagsoc) if local run or 
-        - The grandparent_dir/parent_dir (GangaGSoC2024/gangagsoc) if
+        - The parent_dir (ganga) if local run or 
+        - The grandparent_dir/parent_dir (GangaGSoC2024/ganga) if
           CI run
     
     :param cur_dir: Set the current directory
     :return: The current directory path
     """
     root_dir = os.path.dirname(cur_dir)
-    parent_dir = 'gangagsoc'
+    parent_dir = 'ganga'
 
     # for local runs
     leaf_dir = os.path.basename(cur_dir)

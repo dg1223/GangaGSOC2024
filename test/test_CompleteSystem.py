@@ -21,7 +21,7 @@ class TestInitialTask(unittest.TestCase):
         :return: True if the wrapper bash script exists in current directory
                  and is executable
         """
-        from gangagsoc.initial_task import create_call_script
+        from ganga.initial_task import create_call_script
 
         script, _ = create_call_script(word_counting_script)
 
@@ -86,13 +86,13 @@ class TestInitialTask(unittest.TestCase):
         """
         from ganga.ganga import ganga
         from ganga import Local
-        from gangagsoc.initial_task import create_call_script
-        from gangagsoc.initial_task import submit_ganga_job
+        from ganga.initial_task import create_call_script
+        from ganga.initial_task import submit_ganga_job
 
         # get script into test directory for testing
         current_dir = os.getcwd()
         root_dir = os.path.dirname(current_dir)
-        parent_dir = 'gangagsoc'
+        parent_dir = 'ganga'
 
         self.tryFileCopy(root_dir, current_dir, parent_dir, word_counting_script)
 
@@ -130,13 +130,13 @@ class TestInitialTask(unittest.TestCase):
         """
         from ganga.ganga import ganga
         from ganga import Local
-        from gangagsoc.initial_task import create_call_script
-        from gangagsoc.initial_task import submit_ganga_job
+        from ganga.initial_task import create_call_script
+        from ganga.initial_task import submit_ganga_job
 
         # get script into test directory for testing
         current_dir = os.getcwd()
         root_dir = os.path.dirname(current_dir)
-        parent_dir = 'gangagsoc'
+        parent_dir = 'ganga'
 
         self.tryFileCopy(root_dir, current_dir, parent_dir, split_pdf_script)
 
@@ -164,7 +164,7 @@ class TestInitialTask(unittest.TestCase):
         It creates a test output file with three lines of numbers,
         and then checks that the count_frequency function returns 6.
         """
-        from gangagsoc.initial_task import count_frequency
+        from ganga.initial_task import count_frequency
 
         output_file = "test_output.txt"
         with open(output_file, "w") as f:
@@ -181,7 +181,7 @@ class TestInitialTask(unittest.TestCase):
         """
         from ganga.ganga import ganga
         from ganga import Job, Local
-        from gangagsoc.initial_task import store_word_count
+        from ganga.initial_task import store_word_count
 
         current_dir = os.getcwd()
         job_name = "test_store_word_count"
@@ -224,7 +224,7 @@ class TestSystem(unittest.TestCase):
         """
         current_dir = os.getcwd()
         root_dir = os.path.dirname(current_dir)
-        parent_dir = 'gangagsoc'
+        parent_dir = 'ganga'
         wrapper_script = "initial_task.py"
 
         # for local runs

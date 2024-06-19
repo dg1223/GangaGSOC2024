@@ -1,4 +1,4 @@
-from gangagsoc.InterfaceGanga import InterfaceGanga
+from ganga.InterfaceGanga import InterfaceGanga
 
 def run_ganga_llm():
     """
