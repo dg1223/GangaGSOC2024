@@ -3,8 +3,12 @@ import unittest
 import subprocess
 
 class TestGangaLLM(unittest.TestCase):
-    # Mimics a complete system call to hello.py
     def testExecuteLLMScript(self):
+        '''
+        Mimics a complete system call to generate code by the LLM 
+        to approximate pi, check if code contains a ganga job
+        snippet and if so, submit the ganga job
+        ''' 
         from gangagsoc.run_InterfaceGanga import run_ganga_llm
 
         # Check if LLM was able to generate code

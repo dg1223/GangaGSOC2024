@@ -14,6 +14,20 @@ pdf_file = 'LHC.pdf'
 current_dir = os.getcwd()
 
 def set_current_dir(cur_dir):
+    """
+    The set_current_dir function is used to set the current directory
+    of the script.
+    This is done because when running locally, we are in a test folder
+    and when running on CI, we are in a GangaGSoC2024 folder.
+    The function takes as input the current directory and returns it
+    after setting it to be either:
+        - The parent_dir (gangagsoc) if local run or 
+        - The grandparent_dir/parent_dir (GangaGSoC2024/gangagsoc) if
+          CI run
+    
+    :param cur_dir: Set the current directory
+    :return: The current directory path
+    """
     root_dir = os.path.dirname(cur_dir)
     parent_dir = 'gangagsoc'
 
@@ -30,6 +44,13 @@ def set_current_dir(cur_dir):
 
 
 def create_call_script(script=None):
+    """
+    The create_call_script function creates a bash script that will run
+    the specified Python script.
+    
+    :param script: Pass the name of the script to be run
+    :return: The name of the python script to be run
+    """
     if not script and len(sys.argv) < 2:
         print(f"You must specify the Python file as an argument")
         print(f"If making a complete system call, \
@@ -56,13 +77,27 @@ def create_call_script(script=None):
 
     return python_script, cur_dir
 
-def check_file_existence(filepath):    
+def check_file_existence(filepath):
+    """
+    The check_file_existence function checks if a file exists.
+    If the file does not exist, it prints an error message and
+    exits the program.    
+    
+    :param filepath: Specify the filepath of the file to be checked
+    """
     if not os.path.exists(filepath):
         print(f"\nThe file '{filepath}' does not exist.")
         print("Please store the file in the current directory and rerun the job.\n")
         sys.exit(1)
 
 def submit_ganga_job(python_script, cur_dir):
+    """
+    The submit_ganga_job function is used to submit a Ganga job.
+    
+    :param python_script: Specify the python script to be executed
+    :param cur_dir: Specify the directory where the input file is located
+    :return: A job object and a job name
+    """
     script_filename = os.path.basename(python_script)
     job_name = os.path.splitext(script_filename)[0]
 
@@ -90,6 +125,13 @@ def submit_ganga_job(python_script, cur_dir):
     return j, job_name
 
 def count_frequency(output_file):
+    """
+    The count_frequency function takes a file as input and
+    adds up only the integers.
+    
+    :param output_file: Specify the file that is being read
+    :return: The sum of all integers in the file
+    """
     with open(output_file, 'r') as f:
         lines = f.readlines()
 
@@ -165,6 +207,13 @@ def store_word_count(job, job_name, cur_dir):
     print(f"\nRun this command to check the output from TextMerger: jobs({job.id}).peek('stdout')\n")
 
 def execute_initial_task():
+    """
+    The execute_initial_task function is the main function of this module.
+    It creates a script to be executed by Ganga, submits it as a job and
+    stores the output in an appropriate manner.
+    The script can either be word_counting_script or split_pdf_script
+    depending on what task has been chosen by the user.
+    """
     script, cur_dir = create_call_script()
     job, job_name = submit_ganga_job(script, cur_dir)
 

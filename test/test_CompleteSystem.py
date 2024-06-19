@@ -12,6 +12,15 @@ split_pdf_script = 'split_pdf.py'
 
 class TestInitialTask(unittest.TestCase):
     def testCreateCallScript(self):
+        """
+        The testCreateCallScript function tests the create_call_script
+        function in the initial_task module.
+        It checks if a wrapper bash script exists in the current directory
+        and is executable.
+        
+        :return: True if the wrapper bash script exists in current directory
+                 and is executable
+        """
         from gangagsoc.initial_task import create_call_script
 
         script, _ = create_call_script(word_counting_script)
@@ -25,6 +34,10 @@ class TestInitialTask(unittest.TestCase):
 
     # simple test to see if ganga is working
     def testCreateAndRemoveGangaJob(self):
+        """
+        The testCreateAndRemoveGangaJob function creates a Ganga job,
+        submits it and waits for it to complete. It then removes the job.
+        """
         from ganga.ganga import ganga
         from ganga import Job
         
@@ -37,6 +50,20 @@ class TestInitialTask(unittest.TestCase):
         j.remove()
 
     def tryFileCopy(self, root, cur_dir, par_dir, script):
+        """
+        The tryFileCopy helper function copies a file from the current directory
+        to the root directory. This is necessary because when running CI,
+        the tests are run in a different directory than where they are stored. The 
+        tryFileCopy function first tries to copy the file from its location in the 
+        current working directory (root). If this fails, it then tries copying it from 
+        its location relative to where it was called (cur_dir). This allows for both
+        local and CI runs.
+        
+        :param root: the root directory of the project
+        :param cur_dir: the current directory of the script
+        :param par_dir: the directory of the file to be copied
+        :param script: the name of the file to be copied
+        """
         try:
             # for local runs
             filepath = os.path.join(root, par_dir, script)
@@ -47,6 +74,16 @@ class TestInitialTask(unittest.TestCase):
             shutil.copy(filepath, script)
 
     def testSubmitGangaJob_WordCounting(self):
+        """
+        The testSubmitGangaJob_WordCounting function tests the submit_ganga_job
+        function in initial_task.
+        It checks that a job is created, and that it has been submitted to
+        Ganga's Local backend. It also checks that an application, splitter
+        and postprocessor have been defined for the job. The number of subjobs
+        should be 29, as there are 29 pages in LHC.pdf (the PDF file used for
+        testing). Finally, it waits until all subjobs have completed and then
+        removes them from Ganga.
+        """
         from ganga.ganga import ganga
         from ganga import Local
         from gangagsoc.initial_task import create_call_script
@@ -82,6 +119,15 @@ class TestInitialTask(unittest.TestCase):
         os.remove(word_counting_script)
 
     def testSubmitGangaJob_SplitPDF(self):
+        """
+        The testSubmitGangaJob_SplitPDF function tests the submit_ganga_job
+        function in the initial task.
+        It checks that a job is created, and that it has been submitted to
+        the local backend. It also checks that an application has been defined
+        for this job, and then waits until it completes before checking that its
+        status is 'completed'. Finally, it removes both itself and any scripts
+        used during testing.
+        """
         from ganga.ganga import ganga
         from ganga import Local
         from gangagsoc.initial_task import create_call_script
@@ -112,6 +158,12 @@ class TestInitialTask(unittest.TestCase):
         os.remove(split_pdf_script)
 
     def testCountFrequency(self):
+        """
+        The testCountFrequency function tests the count_frequency
+        function in the initial_task.py file.
+        It creates a test output file with three lines of numbers,
+        and then checks that the count_frequency function returns 6.
+        """
         from gangagsoc.initial_task import count_frequency
 
         output_file = "test_output.txt"
@@ -123,6 +175,10 @@ class TestInitialTask(unittest.TestCase):
         os.remove('test_output.txt')
 
     def testStoreWordCount(self):
+        """
+        The testStoreWordCount function tests the store_word_count function by checking
+        if a text file exists with the correct word count.
+        """
         from ganga.ganga import ganga
         from ganga import Job, Local
         from gangagsoc.initial_task import store_word_count
@@ -158,6 +214,14 @@ through the calling script initial_task.py
 class TestSystem(unittest.TestCase):
     # set up file paths to make system calls
     def setupPath(self, main_script, output):
+        """
+        The setupPath function is used to set up the path for the
+        wrapper script, the main script and the output file.
+        
+        :param main_script: the name of the main script to be run
+        :param output: the output file name
+        :return: the wrapper_path, main_path and result
+        """
         current_dir = os.getcwd()
         root_dir = os.path.dirname(current_dir)
         parent_dir = 'gangagsoc'
